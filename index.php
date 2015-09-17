@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>SuperRhino.net</title>
-        <meta name="description" content="This is SuperRhino.net – What's here? Just some things...">
+        <title>Commissioner.Club — A SuperRhino website</title>
+        <meta name="description" content="The Commissioner Club for Fantasy Football. It's the big show... of fake football leagues.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <meta property="og:image" content="http://superrhino.net/rpp/skyClouds.jpg">
@@ -12,7 +12,7 @@
     </head>
     <body style="margin:0;padding:0;">
         <!--[if lt IE 9]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <p class="browsehappy">You are using an <strong>old ass</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve the world wide web.</p>
         <![endif]-->
 
         <?php if ( isset($_GET['text']) ): ?>
@@ -25,6 +25,8 @@
             <li><a href="http://games.espn.go.com/ffl/leagueoffice?leagueId=388206">Official League Page – ESPN</a>
             <li><a href="https://tackk.com/the-fantasy-commission">The Fantasy Commission League News – Tackk</a>
             <li><a href="https://tackk.com/tfc-records">TFC All-time Record Book</a>
+            <li><a href="https://www.youtube.com/user/TheFantasyCommission">YouTube / TheFantasyCommission</a>
+            <li><a href="https://twitter.com/TFC_Commish">@TFC_Commish</a>
         </ul>
 
         <?php else: ?>
