@@ -31,7 +31,7 @@
 		<h1>Keeper Eligibility</h1>
 		<p><em>Type in the box below to find out keeper eligibility for a player. You can basically type anything you want, fools!</em></p>
 		<p>
-			<input type="text" placeholder="Filter results..." name="filter-keepers" value="" /> <input type="button" value="Clear" id="clear-filter" /><br />
+			<input type="text" placeholder="Search for player..." name="filter-keepers" value="" /> <input type="button" value="Clear" id="clear-filter" /><br />
 			<a href="#" id="show-examples">Examples?</a>
 		</p>
 		<p class="examples">
