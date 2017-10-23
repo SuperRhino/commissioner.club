@@ -15,12 +15,12 @@
 		h2{ margin-bottom: -10px; }
 		h4{ margin: 50px 0 10px; color: #0097bb; }
 		.subtext{ font-style: italic; font-size: 12px; color: #444; }
-		.exceptions { margin-top: 100px; border: 1px solid #aaa; background-color: #e0e0e0; padding: 10px; }
+		.well { margin-top: 10px auto; border: 1px solid #aaa; background-color: #e0e0e0; padding: 10px; }
+		.well ul { list-style-type: none; padding-left: 15px; }
+		.well li { border-left: 4px solid #0097bb; margin: 5px 0 10px; padding-left: 10px; font-size: 20px; line-height: 1.2em; }
 		p{ margin: 0 0 1em 0; }
         #not-found { display: none; color: #e06146; }
 	</style>
-	<script src="http://code.jquery.com/jquery.min.js"></script>
-	<script src="filter-keepers.js"></script>
 </head>
 <body>
 	<?php
@@ -31,7 +31,7 @@
 		<h1>Keeper Eligibility</h1>
 		<p><em>Type in the box below to find out keeper eligibility for a player. You can basically type anything you want, fools!</em></p>
 		<p>
-			<input type="text" placeholder="Filter results..." name="filter-keepers" value="" /> <input type="button" value="Clear" id="clear-filter" /><br />
+			<input type="text" placeholder="Search for player..." name="filter-keepers" value="" /> <input type="button" value="Clear" id="clear-filter" /><br />
 			<a href="#" id="show-examples">Examples?</a>
 		</p>
 		<p class="examples">
@@ -44,20 +44,19 @@
 		</p>
 
 
-		<!--
-		<h3>Keeper Rules</h3>
-		<ul>
-			<li>Keep 0-3 players</li>
-			<li>Only players drafted in the 3rd round or later last season are eligible.</li>
-			<li>Keeper players cost you an upcoming draft pick based on where they were drafted in the previous season:
-				<ul>
-					<li>Drafted round 3-5 last season :: Cost 2nd Round Pick</li>
-					<li>Drafted round 6-10 last season :: Cost 5th round pick</li>
-					<li>Drafted round 11+ or undrafted :: Cost 10th round pick</li>
-				</ul>
-			</li>
-		</ul>
-		-->
+		<div class="well">
+			<h3>Keeper Rules</h3>
+			<em>Re-draft in 2017 &mdash; Submit keepers to commish 1hr before draft</em>
+			<ul>
+				<li>Keep 0-3 players</li>
+				<li>Cost is 3 rounds ahead of where the player was drafted</li>
+				<li>Players drafted in rounds 1-3 are ineligible</li>
+				<li>Undrafted players cost 13th round pick</li>
+				<li>Multiple players of same price, cost a previous round.
+					<em>e.g., Keeping 2 players that each cost a 10th round pick, consume the 10th &amp; 9th round picks.</em></li>
+				<li>Draft-absent owners are disqualified from keepers.</li>
+			</ul>
+		</div>
 
 		<?php
 
@@ -94,7 +93,7 @@
 		</div>
 
 		<!--
-		<div class="exceptions">
+		<div class="well">
 			<p>
 				<strong>Exceptions:</strong><br />
 				<em>Due to keeping two players from the same bucket some players have a different Level than displayed.</em>
@@ -109,5 +108,9 @@
 		-->
 
 	</div>
+
+	<!-- Scripts -->
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+	<script src="/keepers/filter-keepers.js"></script>
 </body>
 </html>
