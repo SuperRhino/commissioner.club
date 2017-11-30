@@ -24,6 +24,7 @@
             <li><a href="./archives/tfc-iron-football.pdf">Iron Football Championship</a>
             <li><a href="./archives/champs/">Hall of Champions</a>
             <li><a href="./archives/tfc-rivalry-week.pdf">Rivalry Week</a>
+            <li><a href="./keepers">Keepers (deprecated)</a>
         </ul>
 
         <h4>Bowl Games:</h4>
