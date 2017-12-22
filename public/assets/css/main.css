@@ -886,7 +886,7 @@ a:focus, a:active {
 
 .landing-page .parallax {
   width: 100%;
-  height: 630px;
+  height: 730px;
   overflow: hidden;
   display: block;
   background-size: 100%;
@@ -1008,7 +1008,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de8e0009', e
 
 .landing-page .parallax .parallax-image img.phone{
   width: 80%;
-  float: right;
+  /* float: right; */
 }
 
 .landing-page .parallax .parallax-background img.flipped{
@@ -1651,9 +1651,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de8e0009', e
   .landing-page .navbar-top{
     background: rgba(0, 0, 0, 0.75);
   }
-  .landing-page .parallax {
-    height: 550px;
-  }
+  /* .landing-page .parallax {
+    height: 630px;
+  } */
   .landing-page .parallax .parallax-background img {
     width: auto;
     height: 100%;
@@ -1688,6 +1688,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de8e0009', e
 }
 
 @media (min-width: 768px){
+  .landing-page .parallax {
+    height: 630px;
+  }
     .landing-page .navbar-top{
         padding-top: 10px;
     }
