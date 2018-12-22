@@ -1,15 +1,18 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Header } from '../styles';
+import { Container, Header, Icon } from '../styles';
+import iconChamps from '../images/svg/044-crown.svg';
+import iconPlayoffs from '../images/svg/067-banner-1.svg';
 
-const Container = styled.div``;
 const ChampTable = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-gap: 0 1rem;
 `;
-const RecordTable = styled.table``;
+const RecordTable = styled.table`
+  width: 100%;
+`;
 const CenterItem = styled.div`
   text-align: center;
 `;
@@ -36,45 +39,55 @@ let sortAppearances = (a, b) => {
 
 const Records = ({ appearances, champs }) => {
   return (
-    <Container>
-      <Header>🏆 Hall of Champions 🏆</Header>
-      <ChampTable>
-        <h5>Year</h5>
-        <h5>Team</h5>
-        <h5>Seed</h5>
-        {champs.sort(sortChamps).map(([year, team, seed], ix) => 
-          <Fragment key={`champ-frag-${ix}`}>
-            <div>{year}</div>
-            <div>{team}</div>
-            <div>{seed}</div>
-          </Fragment>
-        )}
-      </ChampTable>
-      <Header>Playoff Appearances</Header>
-      <RecordTable>
-        <thead>
-          <tr>
-            <th style={{ textAlign: 'left' }}><h5>Team</h5></th>
-            <th><h5>Appearances</h5></th>
-            <th><h5>Record</h5></th>
-            <th><h5>Byes</h5></th>
-          </tr>
-        </thead>
-        <tbody>
-          {appearances.sort(sortAppearances).map(([team, num, wins, losses, byes], index) => {
-            let backgroundColor = index % 2 === 0 ? 'white' : 'rgba(0,0,0,0.15)';
-            return (
-              <tr style={{ backgroundColor }} key={`records-${index}`}>
-                <td><div>{team}</div></td>
-                <td><CenterItem>{num}</CenterItem></td>
-                <td><CenterItem>{`${wins}-${losses}`}</CenterItem></td>
-                <td><CenterItem>{byes}</CenterItem></td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </RecordTable>
-    </Container>
+    <Fragment>
+      <Container>
+        <Header>
+          <Icon src={iconChamps} size={'large'} />
+          Hall of Champions
+        </Header>
+        <ChampTable>
+          <h5>Year</h5>
+          <h5>Team</h5>
+          <h5>Seed</h5>
+          {champs.sort(sortChamps).map(([year, team, seed], ix) =>
+            <Fragment key={`champ-frag-${ix}`}>
+              <div>{year}</div>
+              <div>{team}</div>
+              <div>{seed}</div>
+            </Fragment>
+          )}
+        </ChampTable>
+      </Container>
+      <Container>
+        <Header>
+          <Icon src={iconPlayoffs} size={'large'} />
+          Playoff Appearances
+        </Header>
+        <RecordTable>
+          <thead>
+            <tr>
+              <th style={{ textAlign: 'left' }}><h5>Team</h5></th>
+              <th><h5>Appearances</h5></th>
+              <th><h5>Record</h5></th>
+              <th><h5>Byes</h5></th>
+            </tr>
+          </thead>
+          <tbody>
+            {appearances.sort(sortAppearances).map(([team, num, wins, losses, byes], index) => {
+              let backgroundColor = index % 2 === 0 ? 'white' : 'rgba(0,0,0,0.15)';
+              return (
+                <tr style={{ backgroundColor }} key={`records-${index}`}>
+                  <td><div>{team}</div></td>
+                  <td><CenterItem>{num}</CenterItem></td>
+                  <td><CenterItem>{`${wins}-${losses}`}</CenterItem></td>
+                  <td><CenterItem>{byes}</CenterItem></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </RecordTable>
+      </Container>
+    </Fragment>
   );
 };
 

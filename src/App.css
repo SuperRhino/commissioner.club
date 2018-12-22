@@ -1,15 +1,32 @@
+.app-header { grid-area: header; }
+.app-body { grid-area: body; }
+.app-footer { grid-area: footer; }
+
 .app {
   display: grid;
   grid-template-areas:
-    'header header'
-    'feature feature'
-    'primary primary'
-    'secondary secondary'
-    'footer footer';
-  grid-template-columns: repeat(2, 1fr);
+    'header'
+    'body'
+    'footer';
+  grid-template-columns: 1fr;
   grid-gap: 0.5em;
   font-family: 'Exo 2', sans-serif;
   font-size: calc(10px + 2vmin);
+}
+
+.app-feature { grid-area: feature; }
+.app-primary { grid-area: primary; }
+.app-secondary { grid-area: secondary; }
+
+.app-body {
+  display: grid;
+  grid-template-areas:
+    'feature'
+    'primary'
+    'secondary';
+  grid-template-columns: 1fr;
+  margin: 0 2vmin;
+  max-width: 1400px;
 }
 
 h2, h3, h4, h5 {
@@ -19,17 +36,6 @@ h2, h3, h4, h5 {
 img.placeholder {
   max-width: 100%;
 }
-
-.app-footer,
-.app > div {
-  /* padding: 0 1rem; */
-}
-
-.app-header { grid-area: header; }
-.app-feature { grid-area: feature; }
-.app-primary { grid-area: primary; }
-.app-secondary { grid-area: secondary; }
-.app-footer { grid-area: footer; }
 
 .app-logo {
   animation: app-logo-spin infinite 20s linear;
@@ -49,27 +55,6 @@ img.placeholder {
   padding: 0 0.6rem;
   text-transform: uppercase;
   font-weight: 600;
-}
-
-.app-feature {
-  margin: 0 1vmin;
-}
-.app-primary,
-.app-secondary {
-  margin-right: 1vmin;
-  margin-left: 1vmin;
-}
-
-@media (min-width: 992px) {
-  .app-feature {
-    margin: 0 1rem;
-  }
-  .app-primary {
-    margin-left: 1rem;
-  }
-  .app-secondary {
-    margin-right: 1rem;
-  }
 }
 
 .app-footer {
@@ -115,16 +100,28 @@ img.placeholder {
 
 
 @media (min-width: 992px) {
-  .app {
+  .app-body {
     grid-template-areas:
-      'header header header header'
-      'feature feature feature feature'
-      'primary primary secondary secondary'
-      'footer footer footer footer';
-    grid-template-columns: repeat(4, 1fr);
+      'feature feature'
+      'primary secondary';
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0.5em;
   }
 
   .app-logo {
     height: 10vh;
+  }
+}
+
+@media (min-width: 1200px) {
+  .app-body {
+    grid-gap: 32px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .app-body {
+    grid-gap: 64px;
+    margin: 0 auto;
   }
 }

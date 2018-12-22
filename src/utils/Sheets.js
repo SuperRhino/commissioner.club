@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 const key = 'AIzaSyDHNixsXQ6HS6pImfxyGcDVTfnAOR5CO30';
 const sheetId = '1n6KpxAspvzpVt-Oef6ZVA44qEPuHCDcUAMEqQ0WTSoI';
 const ranges = [
-  'TopStory!A1:D2',
+  'TopStory!A:D',
   'Champions!A:C',
   'PlayoffAppearances!A:E',
   'Playoffs!A:C',
@@ -11,10 +11,7 @@ const ranges = [
 ];
 
 const rangesParam = ranges.map(r => `ranges=${r}`).join('&');
-
 const batchGetUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values:batchGet?${rangesParam}&key=${key}`;
-
-
 
 
 export default {

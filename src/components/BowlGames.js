@@ -1,16 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Header } from '../styles';
-import placeholder from '../images/placeholder/records.png';
+import { Container, Header, Icon } from '../styles';
+import iconBowl from '../images/svg/football.svg';
+import iconPizza from '../images/svg/030-pizza.svg';
+import iconCereal from '../images/svg/008-pour.svg';
+import iconLoser from '../images/svg/101-accident.svg';
+// import placeholder from '../images/placeholder/records.png';
 
-const Container = styled.div``;
 const BowlHeader = styled.h5`
   background-color: rgba(0,0,0,0.5);
   color: #ffffff;
   margin-top: 1vmin;
   font-size: calc(10px + 1vmin);
-  padding: 0 1vmin;
+  display: flex;
+  align-items: center;
+  padding: 1vmin;
+  text-transform: uppercase;
 `;
 const Matchup = styled.div`
   display: flex;
@@ -39,9 +45,13 @@ const Summary = styled.div`
 const BowlGames = (props) => {
   return (
     <Container>
-      <Header>Bowl Games</Header>
+      <Header>
+        <Icon src={iconBowl} size={'large'} />
+        Bowl Games
+      </Header>
       <BowlHeader style={{ backgroundColor: 'rgba(22,156,115,0.75)'}}>
-        🍕 Papa Johns Bowl VIII
+        <Icon src={iconPizza} />
+        Papa Johns Bowl VIII
       </BowlHeader>
       <Matchup>
         <WinningTeam>Slick Nicholas <Score>132</Score></WinningTeam>
@@ -52,18 +62,22 @@ const BowlGames = (props) => {
         Papa Johns Bowl Title.
       </Summary>
       <BowlHeader style={{ backgroundColor: 'rgba(184,66,102, 0.85)'}}>
-        🥣 Cereal Bowl VIII
+        <Icon src={iconCereal} />
+        Cereal Bowl VIII
       </BowlHeader>
       <Matchup>
         <WinningTeam>My Ditka Her Butkus <Score>136</Score></WinningTeam>
         <Team>Team BEER <Score>106</Score></Team>
       </Matchup>
       <Summary>
-        MVP George Kittle gets 30 with 210 yards & TD. 
-        JuJu Smith-Schuster scores 1 TD for each Ju in his name. 
+        MVP George Kittle gets 30 with 210 yards & TD.
+        JuJu Smith-Schuster scores 1 TD for each Ju in his name.
         MDHB gets their 1st ever bowl win.
       </Summary>
-      <BowlHeader>❌ Loser Bowl VIII</BowlHeader>
+      <BowlHeader>
+        <Icon src={iconLoser} />
+        Loser Bowl VIII
+      </BowlHeader>
       <Matchup>
         <WinningTeam>KFC Karokee <Score>112</Score></WinningTeam>
         <Team>abc 123 <Score>118</Score></Team>

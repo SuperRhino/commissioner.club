@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-const Container = styled.div``;
+import { Container, Header, Icon } from '../styles';
+import iconPlayoffs from '../images/svg/048-trophy-1.svg';
 
 const Matchup = styled.div`
   border: 1px solid #999999;
@@ -93,7 +93,10 @@ const Playoffs = ({ blob }) => {
   const hasFinals = finalist1 || finalist2;
   return (
     <Container>
-      <h3>Playoffs</h3>
+      <Header>
+        <Icon src={iconPlayoffs} size={'large'} />
+        Playoffs
+      </Header>
       <Bracket hasSemis={hasSemis} hasFinals={hasFinals}>
         <OneSeedBye hasSemis={hasSemis} hasFinals={hasFinals}>
           {seeds[1]}

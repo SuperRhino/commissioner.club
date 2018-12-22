@@ -10,6 +10,7 @@ import {
   Matchup,
   Playoffs,
   Records,
+  StoryFeed,
   TopStory,
 } from './components';
 
@@ -25,18 +26,20 @@ const AppFeature = (value) => {
 };
 
 const AppPrimary = (value) => {
+  const stories = value.TopStory.slice(1);
   return (
     <ResponsiveCheck>
     {({ isDesktop }) =>
       <div className="app-primary">
         <Matchup
-          title={value.Matchup[2]}
+          title={value.Matchup[2] && value.Matchup[2][0]}
           team1={value.Matchup[0] || []}
           team2={value.Matchup[1] || []}
+          isDesktop={isDesktop}
         />
         {isDesktop && <BowlGames />}
+        {isDesktop && <StoryFeed stories={stories} />}
         {!isDesktop && <Playoffs blob={value.Playoffs} />}
-        {/* <History /> */}
       </div>
     }
     </ResponsiveCheck>
@@ -45,6 +48,7 @@ const AppPrimary = (value) => {
 
 const AppSecondary = (value) => {
   const { Champions, PlayoffAppearances } = value;
+  const stories = value.TopStory.slice(1);
   return (
     <ResponsiveCheck>
     {({ isDesktop }) =>
@@ -53,6 +57,7 @@ const AppSecondary = (value) => {
           <Playoffs blob={value.Playoffs} />
         }
         {!isDesktop && <BowlGames />}
+        {!isDesktop && <StoryFeed stories={stories} />}
         <Records
           appearances={PlayoffAppearances}
           champs={Champions}
@@ -62,6 +67,13 @@ const AppSecondary = (value) => {
   </ResponsiveCheck>
   );
 };
+
+const AppBody = (value) =>
+  <div className="app-body">
+    <AppFeature {...value} />
+    <AppPrimary {...value} />
+    <AppSecondary {...value} />
+  </div>
 
 
 class App extends Component {
@@ -85,9 +97,7 @@ class App extends Component {
       <ResponsiveProvider>
         <div className="app">
           <Header />
-          <AppFeature {...this.state} />
-          <AppPrimary {...this.state} />
-          <AppSecondary {...this.state} />
+          <AppBody {...this.state} />
           <Footer />
         </div>
       </ResponsiveProvider>

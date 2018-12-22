@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-const mainImage = 'https://cdn.vox-cdn.com/thumbor/sAsYTtAVp-mdl-hQH1scZFMNziw=/0x0:3288x2812/1200x800/filters:focal(1438x337:1964x863)/cdn.vox-cdn.com/uploads/chorus_image/image/57141147/usa_today_10340420.0.jpg';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column-reverse;
-  
+
   @media (min-width: 992px) {
     display: grid;
     grid-template-columns: 1fr;
@@ -20,11 +19,14 @@ const Story = styled.div`
 `;
 
 const StoryBody = styled.div`
-  font-size: 14px;
+  font-size: calc(10px + 1vmin);
   column-count: 2;
-  
+  letter-spacing: 0.45px;
+  line-height: 1.3rem;
+
   @media (min-width: 992px) {
     column-count: 3;
+    padding: 2vmin 4rem 2vmin 0;
   }
 
   p {
@@ -48,7 +50,7 @@ const TopStory = ({ story }) => {
         </StoryBody>
       </Story>
       <ImageContainer>
-        {image && 
+        {image &&
           <img src={image} className="placeholder" alt="" />
         }
       </ImageContainer>
