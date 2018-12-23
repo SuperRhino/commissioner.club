@@ -4,16 +4,20 @@ self.__precacheManifest = [
     "url": "./static/media/008-pour.19b357ec.svg"
   },
   {
-    "revision": "341c53d1777733ca957b",
-    "url": "./static/css/main.594b9c97.chunk.css"
+    "revision": "4bd2272b434d7ecdca50",
+    "url": "./static/css/main.08f7de36.chunk.css"
   },
   {
-    "revision": "903dec1cb540443669fa",
-    "url": "./static/js/1.903dec1c.chunk.js"
+    "revision": "d1fc3e67650ef4b5d3e7",
+    "url": "./static/js/1.d1fc3e67.chunk.js"
   },
   {
     "revision": "4a686d48d5a089750c49",
     "url": "./static/js/runtime~main.4a686d48.js"
+  },
+  {
+    "revision": "56202164e83c11be61201bd855f71a47",
+    "url": "./static/media/football.56202164.svg"
   },
   {
     "revision": "d9c0b6077b90372b8c4c9a8a4f88ce67",
@@ -28,16 +32,12 @@ self.__precacheManifest = [
     "url": "./static/media/footer.4052e9d3.png"
   },
   {
-    "revision": "56202164e83c11be61201bd855f71a47",
-    "url": "./static/media/football.56202164.svg"
-  },
-  {
     "revision": "632f1e8ee31ad10691fd198e74b6dc1d",
     "url": "./static/media/030-pizza.632f1e8e.svg"
   },
   {
-    "revision": "341c53d1777733ca957b",
-    "url": "./static/js/main.341c53d1.chunk.js"
+    "revision": "4bd2272b434d7ecdca50",
+    "url": "./static/js/main.4bd2272b.chunk.js"
   },
   {
     "revision": "eedd1db4de06cd16a22bfa7bbc5723ed",
@@ -68,7 +68,7 @@ self.__precacheManifest = [
     "url": "./static/media/004-newspaper.ef749473.svg"
   },
   {
-    "revision": "d93e0c255be738178687c134d82c159b",
+    "revision": "6ad97a563024d179ca32ca6ae39f883a",
     "url": "./index.html"
   }
 ];
