@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Container, Header, Icon } from '../styles';
@@ -6,7 +6,6 @@ import iconBowl from '../images/svg/football.svg';
 import iconPizza from '../images/svg/030-pizza.svg';
 import iconCereal from '../images/svg/008-pour.svg';
 import iconLoser from '../images/svg/101-accident.svg';
-// import placeholder from '../images/placeholder/records.png';
 
 const BowlHeader = styled.h5`
   background-color: rgba(0,0,0,0.5);
@@ -28,8 +27,7 @@ const Team = styled.div`
   display: flex;
   flex-direction: row-reverse;
 `;
-const WinningTeam = styled(Team)`
-  font-weight: 600;
+const LeftTeam = styled(Team)`
   flex-direction: row;
 `;
 const Score = styled.span`
@@ -41,54 +39,68 @@ const Summary = styled.div`
   margin-bottom: 1em;
 `;
 
+const winnerStyles = { fontWeight: 600 };
+const loserStyles = { color: '#666666' };
 
-const BowlGames = (props) => {
+const defaultInfo = {icon: iconBowl, backgroundColor: 'rgba(0,0,0,0.5)'};
+const bowlInfo = [
+  {icon: iconPizza, backgroundColor: 'rgba(22,156,115,0.75)'},
+  {icon: iconCereal, backgroundColor: 'rgba(184,66,102,0.85)'},
+  {icon: iconLoser, backgroundColor: 'rgba(0,0,0,0.5)', reverse: true},
+];
+
+
+const BowlGames = ({ bowls }) => {
+  if (bowls.length === 0) return null;
+
   return (
     <Container>
       <Header>
         <Icon src={iconBowl} size={'large'} />
         Bowl Games
       </Header>
-      <BowlHeader style={{ backgroundColor: 'rgba(22,156,115,0.75)'}}>
-        <Icon src={iconPizza} />
-        Papa Johns Bowl VIII
-      </BowlHeader>
-      <Matchup>
-        <WinningTeam>Slick Nicholas <Score>132</Score></WinningTeam>
-        <Team>Roids Hookers And Cocaine <Score>115</Score></Team>
-      </Matchup>
-      <Summary>
-        Julio Jones & the Bears DST lead Slick Nicholas as Papa Nick secures their 2nd
-        Papa Johns Bowl Title.
-      </Summary>
-      <BowlHeader style={{ backgroundColor: 'rgba(184,66,102, 0.85)'}}>
-        <Icon src={iconCereal} />
-        Cereal Bowl VIII
-      </BowlHeader>
-      <Matchup>
-        <WinningTeam>My Ditka Her Butkus <Score>136</Score></WinningTeam>
-        <Team>Team BEER <Score>106</Score></Team>
-      </Matchup>
-      <Summary>
-        MVP George Kittle gets 30 with 210 yards & TD.
-        JuJu Smith-Schuster scores 1 TD for each Ju in his name.
-        MDHB gets their 1st ever bowl win.
-      </Summary>
-      <BowlHeader>
-        <Icon src={iconLoser} />
-        Loser Bowl VIII
-      </BowlHeader>
-      <Matchup>
-        <WinningTeam>KFC Karokee <Score>112</Score></WinningTeam>
-        <Team>abc 123 <Score>118</Score></Team>
-      </Matchup>
-      <Summary>
-        KFC Karaokee loses (and therefore wins) vs 4-time Loser Bowl Loser, abc 123.
-        MVP LeSean McCoy finished the game with 1/10 of a point & a groin pull.
-      </Summary>
-      {/* <div><img src={placeholder} className="placeholder" alt="" /></div> */}
+      {bowls.map((data, ix) => {
+        const [bowlgame, team1, score1, team2, score2, blurb] = data;
+        const { icon, backgroundColor, reverse } = bowlInfo[ix] || defaultInfo;
+        const isComplete = score1 && score2;
+        const team1Wins = reverse ? +score1 < +score2 : +score1 > +score2;
+        const team1style = !isComplete ? {} : (
+          team1Wins ? winnerStyles : loserStyles
+        );
+        const team2style = !isComplete ? {} : (
+          !team1Wins ? winnerStyles : loserStyles
+        );
+        return (
+          <Fragment>
+            <BowlHeader style={{ backgroundColor }}>
+              <Icon src={icon} />
+              {bowlgame}
+            </BowlHeader>
+            <Matchup>
+              <LeftTeam style={{ ...team1style }}>
+                {team1} {score1 && <Score>{score1}</Score>}
+              </LeftTeam>
+              <Team style={{ ...team2style }}>
+                {team2} {score2 && <Score>{score2}</Score>}
+              </Team>
+            </Matchup>
+            <Summary>
+              {blurb}
+            </Summary>
+          </Fragment>
+        );
+      })}
     </Container>
   );
+};
+
+BowlGames.propTypes = {
+  // Array of: [bowlgame, team1, score1, team2, score2, blurb]
+  bowls: PropTypes.array,
+};
+
+BowlGames.defaultProps = {
+  bowls: [],
 };
 
 export default BowlGames;
