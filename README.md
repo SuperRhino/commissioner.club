@@ -27,3 +27,11 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+NOTE: This also moves copies the contents of the generated `build/` folder into `public_html/`
+
+#### To deploy
+
+1. `yarn build`
+1. commit & push
+1. update superrhino server
