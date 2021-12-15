@@ -20,9 +20,13 @@ const Story = styled.div`
 
 const StoryBody = styled.div`
   font-size: calc(10px + 1vmin);
-  column-count: 2;
+  column-count: 1;
   letter-spacing: 0.45px;
   line-height: 1.3rem;
+
+  @media (min-width: 768px) {
+    column-count: 2;
+  }
 
   @media (min-width: 992px) {
     column-count: 3;
