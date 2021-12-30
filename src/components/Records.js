@@ -24,14 +24,21 @@ let sortChamps = (a, b) => {
   return 0;
 };
 
-let sortAppearances = (a, b) => {
-  // sort by num appearances desc
-  if (a[1] < b[1]) return 1;
-  if (a[1] > b[1]) return -1;
-  // then by wins desc
+let sortPlayoffRecord = (a, b) => {
+  // sort by...
+  // params: (array) [0:team, 1:num, 2:wins, 3:losses, 4:byes]
+  // win percentages desc (wins/(wins+losses))
+  let wpa = parseInt(a[2])/(parseInt(a[2]) + parseInt(a[3]));
+  let wpb = parseInt(b[2])/(parseInt(b[2]) + parseInt(b[3]));
+  if (wpa < wpb) return 1;
+  if (wpa > wpb) return -1;
+  // wins desc
   if (a[2] < b[2]) return 1;
   if (a[2] > b[2]) return -1;
-  // then by name asc
+  // num appearances desc
+  if (a[1] < b[1]) return 1;
+  if (a[1] > b[1]) return -1;
+  // name asc
   if (a[0] < b[0]) return -1;
   if (a[0] > b[0]) return 1;
   return 0;
@@ -73,7 +80,7 @@ const Records = ({ appearances, champs }) => {
             </tr>
           </thead>
           <tbody>
-            {appearances.sort(sortAppearances).map(([team, num, wins, losses, byes], index) => {
+            {appearances.sort(sortPlayoffRecord).map(([team, num, wins, losses, byes], index) => {
               let backgroundColor = index % 2 === 0 ? 'white' : 'rgba(0,0,0,0.15)';
               return (
                 <tr style={{ backgroundColor }} key={`records-${index}`}>
