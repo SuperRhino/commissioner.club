@@ -1,9 +1,9 @@
 {
-  "main.css": "./static/css/main.08f7de36.chunk.css",
-  "main.js": "./static/js/main.8de6c2ec.chunk.js",
-  "main.js.map": "./static/js/main.8de6c2ec.chunk.js.map",
-  "static/js/1.d3bd4777.chunk.js": "./static/js/1.d3bd4777.chunk.js",
-  "static/js/1.d3bd4777.chunk.js.map": "./static/js/1.d3bd4777.chunk.js.map",
+  "main.css": "./static/css/main.efb5b2f3.chunk.css",
+  "main.js": "./static/js/main.99d971a1.chunk.js",
+  "main.js.map": "./static/js/main.99d971a1.chunk.js.map",
+  "static/js/1.c46f5820.chunk.js": "./static/js/1.c46f5820.chunk.js",
+  "static/js/1.c46f5820.chunk.js.map": "./static/js/1.c46f5820.chunk.js.map",
   "runtime~main.js": "./static/js/runtime~main.4a686d48.js",
   "runtime~main.js.map": "./static/js/runtime~main.4a686d48.js.map",
   "static/media/football.svg": "./static/media/football.56202164.svg",
@@ -19,8 +19,8 @@
   "static/media/044-crown.svg": "./static/media/044-crown.95b03102.svg",
   "static/media/067-banner-1.svg": "./static/media/067-banner-1.9f45755b.svg",
   "static/media/004-newspaper.svg": "./static/media/004-newspaper.ef749473.svg",
-  "static/css/main.08f7de36.chunk.css.map": "./static/css/main.08f7de36.chunk.css.map",
+  "static/css/main.efb5b2f3.chunk.css.map": "./static/css/main.efb5b2f3.chunk.css.map",
   "index.html": "./index.html",
-  "precache-manifest.c29f57fc580ab3fd73a73e5d95742d56.js": "./precache-manifest.c29f57fc580ab3fd73a73e5d95742d56.js",
+  "precache-manifest.b815e1924aa345d0492430ca598e3b20.js": "./precache-manifest.b815e1924aa345d0492430ca598e3b20.js",
   "service-worker.js": "./service-worker.js"
 }
