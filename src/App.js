@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { ResponsiveProvider, ResponsiveCheck } from './utils/Responsive';
 import Sheets from './utils/Sheets';
 import './App.css';
 
@@ -15,66 +14,38 @@ import {
 } from './components';
 
 
-const AppFeature = (value) => {
+const AppBody = ({
+  TopStory: topStory,
+  Champions: champions,
+  PlayoffAppearances: playoffAppearances,
+  Playoffs: playoffs,
+  Matchup: matchup,
+  BowlGames: bowlGames,
+}) => {
+  const [featureStory, ...feedStories] = topStory;
   return (
-    <div className="app-feature">
-      <TopStory
-        story={value.TopStory[0]}
-      />
+    <div className="app-body">
+      <TopStory story={featureStory} />
+      <div className="app-desktop-col1">
+        <Matchup
+          title={matchup[2] && matchup[2][0]}
+          team1={matchup[0] || []}
+          team2={matchup[1] || []}
+        />
+        <BowlGames bowls={bowlGames} />
+        <StoryFeed stories={feedStories} />
+      </div>
+      <div className="app-desktop-col2">
+        <Playoffs blob={playoffs} />
+        <Records
+          appearances={playoffAppearances}
+          champs={champions}
+        />
+        <History />
+      </div>
     </div>
   );
-};
-
-const AppPrimary = (value) => {
-  const stories = value.TopStory.slice(1);
-  return (
-    <ResponsiveCheck>
-    {({ isDesktop }) =>
-      <div className="app-primary">
-        <Matchup
-          title={value.Matchup[2] && value.Matchup[2][0]}
-          team1={value.Matchup[0] || []}
-          team2={value.Matchup[1] || []}
-          isDesktop={isDesktop}
-        />
-        {isDesktop && <BowlGames bowls={value.BowlGames} />}
-        {isDesktop && <StoryFeed stories={stories} />}
-        {!isDesktop && <Playoffs blob={value.Playoffs} />}
-      </div>
-    }
-    </ResponsiveCheck>
-  );
-};
-
-const AppSecondary = (value) => {
-  const { Champions, PlayoffAppearances } = value;
-  const stories = value.TopStory.slice(1);
-  return (
-    <ResponsiveCheck>
-    {({ isDesktop }) =>
-      <div className="app-secondary">
-        {isDesktop &&
-          <Playoffs blob={value.Playoffs} />
-        }
-        {!isDesktop && <BowlGames bowls={value.BowlGames} />}
-        {!isDesktop && <StoryFeed stories={stories} />}
-        <Records
-          appearances={PlayoffAppearances}
-          champs={Champions}
-        />
-      </div>
-    }
-  </ResponsiveCheck>
-  );
-};
-
-const AppBody = (value) =>
-  <div className="app-body">
-    <AppFeature {...value} />
-    <AppPrimary {...value} />
-    <AppSecondary {...value} />
-  </div>
-
+}
 
 class App extends Component {
   state = {
@@ -95,13 +66,11 @@ class App extends Component {
 
   render() {
     return (
-      <ResponsiveProvider>
-        <div className="app">
-          <Header />
-          <AppBody {...this.state} />
-          <Footer />
-        </div>
-      </ResponsiveProvider>
+      <div className="app">
+        <Header />
+        <AppBody {...this.state} />
+        <Footer />
+      </div>
     );
   }
 }

@@ -54,7 +54,7 @@ const BowlGames = ({ bowls }) => {
   if (bowls.length === 0) return null;
 
   return (
-    <Container>
+    <Container className="BowlGames">
       <Header>
         <Icon src={iconBowl} size={'large'} />
         Bowl Games
@@ -71,7 +71,7 @@ const BowlGames = ({ bowls }) => {
           !team1Wins ? winnerStyles : loserStyles
         );
         return (
-          <Fragment>
+          <Fragment key={`bowlgame-${ix}`}>
             <BowlHeader style={{ backgroundColor }}>
               <Icon src={icon} />
               {bowlgame}

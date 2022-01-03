@@ -45,7 +45,7 @@ const ImageContainer = styled.div`
 const TopStory = ({ story }) => {
   const [headline, subtitle, body, image] = story;
   return (
-    <Container>
+    <Container className="TopStory">
       <Story>
         <h2>{headline}</h2>
         <h4>{subtitle}</h4>

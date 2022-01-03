@@ -105,11 +105,11 @@ const ListItem = styled.li`
   }
 `;
 
-const Matchup = ({ title, team1, team2, isDesktop }) => {
+const Matchup = ({ title, team1, team2 }) => {
   const [teamName1, image1, caption1, ...bullets1] = team1;
   const [teamName2, image2, caption2, ...bullets2] = team2;
   return (
-    <MatchupContainer>
+    <MatchupContainer className="Matchup">
       <MatchupHeader>
         <Icon src={iconTrophy} size={'large'} />
         {title}
@@ -134,7 +134,7 @@ const Matchup = ({ title, team1, team2, isDesktop }) => {
         <List>
           {bullets1.map((b, i) =>
             <ListItem key={`team1-bullet-${i}`}>
-              <Icon src={icon} size={isDesktop ? 'large' : 'md'} />
+              <Icon src={icon} />
               {b}
             </ListItem>
           )}
@@ -145,7 +145,7 @@ const Matchup = ({ title, team1, team2, isDesktop }) => {
         <List>
           {bullets2.map((b, i) =>
             <ListItem key={`team2-bullet-${i}`}>
-              <Icon src={icon} size={isDesktop ? 'large' : 'md'} />
+              <Icon src={icon} />
               {b}
             </ListItem>
           )}
@@ -157,7 +157,6 @@ const Matchup = ({ title, team1, team2, isDesktop }) => {
 };
 
 Matchup.propTypes = {
-  isDesktop: PropTypes.bool,
   title: PropTypes.string,
   // [team, image, caption, bullet1, bullet2, bullet3]
   team1: PropTypes.array,
@@ -165,7 +164,6 @@ Matchup.propTypes = {
 };
 
 Matchup.defaultProps = {
-  isDesktop: false,
   title: 'Matchup of the Week',
   team1: [],
   team2: [],

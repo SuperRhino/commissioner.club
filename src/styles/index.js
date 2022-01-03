@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const SIZE_LG = 48;
 const SIZE_MD = 32;
@@ -8,9 +8,14 @@ export const Container = styled.div`
 `;
 
 export const Icon = styled.img`
-  width: ${props => props.size === 'large' ? `${SIZE_LG}px` : `${SIZE_MD}px` };
-  height: ${props => props.size === 'large' ? `${SIZE_LG}px` : `${SIZE_MD}px` };
+  width: ${SIZE_MD}px;
+  height: ${SIZE_MD}px;
   margin-right: 8px;
+
+  @media (min-width: 1024px) {
+    width: ${SIZE_LG}px;
+    height: ${SIZE_LG}px;
+  }
 `;
 
 export const Header = styled.h3`

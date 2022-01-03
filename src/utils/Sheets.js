@@ -5,7 +5,7 @@ const sheetId = '1n6KpxAspvzpVt-Oef6ZVA44qEPuHCDcUAMEqQ0WTSoI';
 const ranges = [
   'TopStory!A:D',
   'Champions!A:C',
-  'PlayoffAppearances!A:E',
+  'PlayoffAppearances!A:H',
   'Playoffs!A:C',
   'Matchup!A:F',
   'BowlGames!A:F',

@@ -5,6 +5,7 @@ import logo from '../images/ff-badge.png';
 const handleClick = (e) => {
   e.preventDefault();
   alert("💥 boom! great job clickin' shit, stud");
+  window.location = './v0';
 };
 
 const Header = (props) => {
