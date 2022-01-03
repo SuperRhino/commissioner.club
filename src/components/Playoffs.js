@@ -92,7 +92,7 @@ const Playoffs = ({ blob }) => {
   const hasSemis = winner4v5 || winner4v5;
   const hasFinals = finalist1 || finalist2;
   return (
-    <Container>
+    <Container className="Playoffs">
       <Header>
         <Icon src={iconPlayoffs} size={'large'} />
         Playoffs

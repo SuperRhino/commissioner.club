@@ -47,7 +47,7 @@ let sortPlayoffRecord = (a, b) => {
 const Records = ({ appearances, champs }) => {
   return (
     <Fragment>
-      <Container>
+      <Container className={"Records-Champions"}>
         <Header>
           <Icon src={iconChamps} size={'large'} />
           Hall of Champions
@@ -65,10 +65,10 @@ const Records = ({ appearances, champs }) => {
           )}
         </ChampTable>
       </Container>
-      <Container>
+      <Container className={"Records-PlayoffHistory"}>
         <Header>
           <Icon src={iconPlayoffs} size={'large'} />
-          Playoff Appearances
+          Playoff History
         </Header>
         <RecordTable>
           <thead>
@@ -77,10 +77,11 @@ const Records = ({ appearances, champs }) => {
               <th><h5>Appearances</h5></th>
               <th><h5>Record</h5></th>
               <th><h5>Byes</h5></th>
+              <th><h5>Titles</h5></th>
             </tr>
           </thead>
           <tbody>
-            {appearances.sort(sortPlayoffRecord).map(([team, num, wins, losses, byes], index) => {
+            {appearances.sort(sortPlayoffRecord).map(([team, num, wins, losses, byes, cgames, cwins], index) => {
               let backgroundColor = index % 2 === 0 ? 'white' : 'rgba(0,0,0,0.15)';
               return (
                 <tr style={{ backgroundColor }} key={`records-${index}`}>
@@ -88,6 +89,7 @@ const Records = ({ appearances, champs }) => {
                   <td><CenterItem>{num}</CenterItem></td>
                   <td><CenterItem>{`${wins}-${losses}`}</CenterItem></td>
                   <td><CenterItem>{byes}</CenterItem></td>
+                  <td><CenterItem>{cwins}</CenterItem></td>
                 </tr>
               );
             })}

@@ -30,7 +30,7 @@ const StoryFeed = ({ stories }) => {
 
   const [headline, subtitle, body, image] = stories[0];
   return (
-    <Container>
+    <Container className="StoryFeed">
       <Header>
         <Icon src={iconNews} size={'large'} />
         In Other News...

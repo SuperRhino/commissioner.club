@@ -14,16 +14,26 @@
   font-size: calc(10px + 2vmin);
 }
 
-.app-feature { grid-area: feature; }
-.app-primary { grid-area: primary; }
-.app-secondary { grid-area: secondary; }
+.TopStory { grid-area: TopStory; }
+.Matchup { grid-area: Matchup; }
+.Playoffs { grid-area: Playoffs; }
+.BowlGames { grid-area: BowlGames; }
+.StoryFeed { grid-area: StoryFeed; }
+.Records-Champions { grid-area: Records-Champions; }
+.Records-PlayoffHistory { grid-area: Records-PlayoffHistory; }
+.History { grid-area: History; }
 
 .app-body {
   display: grid;
   grid-template-areas:
-    'feature'
-    'primary'
-    'secondary';
+    'TopStory'
+    'Matchup'
+    'Playoffs'
+    'BowlGames'
+    'StoryFeed'
+    'Records-Champions'
+    'Records-PlayoffHistory'
+    'History';
   grid-template-columns: 1fr;
   margin: 0 2vmin;
   max-width: 1400px;
@@ -100,10 +110,13 @@ img.placeholder {
 
 
 @media (min-width: 992px) {
+  .app-desktop-col1 { grid-area: app-desktop-col1; }
+  .app-desktop-col2 { grid-area: app-desktop-col2; }
+
   .app-body {
     grid-template-areas:
-      'feature feature'
-      'primary secondary';
+      'TopStory TopStory'
+      'app-desktop-col1 app-desktop-col2';
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 0.5em;
   }
