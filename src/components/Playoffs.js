@@ -17,20 +17,23 @@ const playoffGrid = `
   "one-seed-bye-week"
   "four-vs-five-seed"
   "three-vs-six-seed"
-  "two-seed-bye-week"
+  "two-vs-seven-seed"
 `;
+
 const semisGrid = `
   "one-seed-bye-week semi-final-one"
   "four-vs-five-seed semi-final-one"
   "three-vs-six-seed semi-final-two"
-  "two-seed-bye-week semi-final-two"
+  "two-vs-seven-seed semi-final-two"
 `;
+
 const finalsGrid = `
   "one-seed-bye-week semi-final-one final-round"
   "four-vs-five-seed semi-final-one final-round"
   "three-vs-six-seed semi-final-two final-round"
-  "two-seed-bye-week semi-final-two final-round"
+  "two-vs-seven-seed semi-final-two final-round"
 `;
+
 const Bracket = styled.div`
   display: grid;
   grid-template-columns: ${({ hasSemis, hasFinals }) =>
@@ -49,12 +52,14 @@ const OneSeedBye = styled(Matchup)`
     `calc(10px + ${hasFinals ? 0 : (hasSemis ? 1 : 2)}vmin)`
   };
 `;
-const TwoSeedBye = styled(Matchup)`
-  grid-area: two-seed-bye-week;
+
+const TwoVsSevenSeed = styled(Matchup)`
+  grid-area: two-vs-seven-seed;
   font-size: ${({hasSemis, hasFinals}) =>
     `calc(10px + ${hasFinals ? 0 : (hasSemis ? 1 : 2)}vmin)`
   };
 `;
+
 const FourVsFiveSeed = styled(Matchup)`
   grid-area: four-vs-five-seed;
   font-size: ${({hasSemis, hasFinals}) =>
@@ -80,64 +85,77 @@ const FinalRound = styled(Matchup)`
 `;
 
 const Playoffs = ({ blob }) => {
-  // const seeds = [1,2]
   let seeds = {};
-  [1,2,3,4,5,6].forEach(s => {
-    seeds[s] = blob[s-1] && blob[s-1][0] || null;
+  [1,2,3,4,5,6,7].forEach(s => {
+    seeds[s] = (blob[s-1] && blob[s-1][0]) || null;
   });
-  const winner4v5 = blob[0] && blob[0][1] || null;
-  const winner3v6 = blob[1] && blob[1][1] || null;
-  const finalist1 = blob[0] && blob[0][2] || null;
-  const finalist2 = blob[1] && blob[1][2] || null;
-  const hasSemis = winner4v5 || winner4v5;
+
+  // ✅ Round 2 winners
+  const winner4v5 = (blob[0] && blob[0][1]) || null;
+  const winner2v7 = (blob[1] && blob[1][1]) || null;
+  const winner3v6 = (blob[2] && blob[2][1]) || null;
+
+  // ✅ Finalists
+  const finalist1 = (blob[0] && blob[0][2]) || null;
+  const finalist2 = (blob[1] && blob[1][2]) || null;
+
+  const hasSemis = winner4v5 || winner2v7 || winner3v6;
   const hasFinals = finalist1 || finalist2;
+
   return (
     <Container className="Playoffs">
       <Header>
         <Icon src={iconPlayoffs} size={'large'} />
         Playoffs
       </Header>
+
       <Bracket hasSemis={hasSemis} hasFinals={hasFinals}>
+        {/* Round 1 */}
         <OneSeedBye hasSemis={hasSemis} hasFinals={hasFinals}>
           {seeds[1]}
         </OneSeedBye>
+
         <FourVsFiveSeed hasSemis={hasSemis} hasFinals={hasFinals}>
           {seeds[5]}<br />
           {seeds[4]}
         </FourVsFiveSeed>
+
         <ThreeVsSixSeed hasSemis={hasSemis} hasFinals={hasFinals}>
           {seeds[3]}<br />
           {seeds[6]}
         </ThreeVsSixSeed>
-        <TwoSeedBye hasSemis={hasSemis} hasFinals={hasFinals}>
-          {seeds[2]}
-        </TwoSeedBye>
-        {/* Second Round */}
-        {hasSemis &&
+
+        <TwoVsSevenSeed hasSemis={hasSemis} hasFinals={hasFinals}>
+          {seeds[2]}<br />
+          {seeds[7]}
+        </TwoVsSevenSeed>
+
+        {hasSemis && (
           <Fragment>
             <SemiFinalOne isPast={hasFinals}>
               {seeds[1]}<br />
               {winner4v5}
             </SemiFinalOne>
+
             <SemiFinalTwo isPast={hasFinals}>
               {winner3v6}<br />
-              {seeds[2]}
+              {winner2v7}
             </SemiFinalTwo>
           </Fragment>
-        }
-        {hasFinals &&
+        )}
+
+        {hasFinals && (
           <FinalRound>
             {finalist1}<br />
             {finalist2}
           </FinalRound>
-        }
+        )}
       </Bracket>
     </Container>
   );
 };
 
 Playoffs.propTypes = {
-  // [team, image, caption, bullet1, bullet2, bullet3]
   blob: PropTypes.array,
 };
 
