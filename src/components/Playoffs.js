@@ -5,12 +5,63 @@ import { Container, Header, Icon } from '../styles';
 import iconPlayoffs from '../images/svg/048-trophy-1.svg';
 
 const Matchup = styled.div`
-  border: 1px solid #999999;
-  padding: 2vmin 1rem;
-  font-weight: 200;
+  position: relative;
+  padding: 1.75vmin 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   align-self: center;
-  background-color: #C0C1AB;
-  background-image: linear-gradient(to bottom, #C0C1AB, #CCCCCC);
+
+  /* Neutral panel */
+  background-color: #c9c9b3;
+  background-image:
+    linear-gradient(
+      to bottom,
+      #dadac2 0%,
+      #b2b29a 100%
+    );
+
+  /* Colored frame */
+  border: 3px solid #2b2e4a; /* deep navy */
+
+  /* Depth + color accent */
+  box-shadow:
+    inset 2px 2px 0 rgba(255,255,255,0.45),
+    inset -2px -2px 0 rgba(0,0,0,0.35),
+    3px 3px 0 #7a1f1f; /* burgundy drop */
+
+  /* Text */
+  color: #141414;
+  text-transform: uppercase;
+  line-height: 1.15;
+
+  /* Subtle scanlines */
+  background-size: 100% 4px;
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,0.04) 50%,
+      rgba(0,0,0,0.04) 50%
+    ),
+    linear-gradient(
+      to bottom,
+      #dadac2 0%,
+      #b2b29a 100%
+    );
+
+  /* Accent bar */
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 6px;
+    width: 100%;
+    background: linear-gradient(
+      to right,
+      #7a1f1f,
+      #d1a84b,
+      #7a1f1f
+    );
+  }
 `;
 
 const playoffGrid = `
