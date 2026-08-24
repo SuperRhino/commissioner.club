@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#071323" />
+  <title>The Fantasy Commission — 2026 Draft Lottery</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="masthead">
+      <div class="promo-logo" aria-hidden="true">
+        <span class="promo-logo-top">TFC</span>
+        <span class="promo-logo-year">2026</span>
+      </div>
+
+      <div class="masthead-copy">
+        <p class="eyebrow">THE FANTASY COMMISSION PRESENTS</p>
+        <h1>DRAFT LOTTERY<br><span>EXTRAVAGANZA</span></h1>
+        <p class="tagline">12 teams enter. One commissioner presses a button.</p>
+      </div>
+
+      <div class="masthead-badge" aria-hidden="true">LIVE*</div>
+
+      <div class="reaction-marquee" id="reaction-marquee" aria-hidden="true">
+        <div class="reaction-marquee-inner">
+          <span id="reaction-marquee-text">BOOMSHAKALAKA!</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="promo-strip" aria-hidden="true">
+        <span>★ PING PONG BALLS ★</span>
+        <span>NO ACCOUNTABILITY</span>
+        <span>★ 100% LEGITIMATE ★</span>
+      </div>
+      <section class="board-wrap" aria-labelledby="board-title">
+        <div class="board-topline">
+          <span id="board-title">THE BIG BOARD</span>
+          <span id="reveal-progress">0 / 12 REVEALED</span>
+        </div>
+
+        <ol class="lottery-board" id="lottery-board" aria-live="polite"></ol>
+      </section>
+
+      <section class="control-dock" aria-label="Lottery controls">
+        <div class="status-copy">
+          <span class="status-kicker" id="status-kicker">READY</span>
+          <strong id="status-line">12 picks. One board. Maximum unnecessary drama.</strong>
+        </div>
+
+        <div class="dock-actions">
+          <button class="sound-action" id="sound-button" type="button" aria-pressed="true" title="Toggle sound">🔊</button>
+          <button class="countdown-action" id="countdown-button" type="button" aria-pressed="true" title="Toggle countdown">3·2·1</button>
+          <button class="odds-action" id="odds-button" type="button" aria-expanded="false" aria-controls="odds-panel">
+            LIVE ODDS
+          </button>
+
+          <button class="primary-action" id="reveal-button" type="button">
+            <span class="button-label">START LOTTERY</span>
+            <span class="button-icon" aria-hidden="true">▶</span>
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+
+  <div class="odds-layer" id="odds-panel" aria-hidden="true">
+    <div class="odds-card" role="dialog" aria-modal="true" aria-labelledby="odds-title">
+      <div class="odds-header">
+        <div>
+          <p class="odds-eyebrow">THE HOPPER</p>
+          <h2 id="odds-title">Live Draft Odds</h2>
+          <p class="odds-description" id="odds-description">Current odds among teams still in the hopper.</p>
+        </div>
+        <button class="odds-close" id="odds-close" type="button" aria-label="Close live odds">×</button>
+      </div>
+      <div class="odds-summary" id="odds-summary"></div>
+      <div class="odds-list" id="odds-list"></div>
+    </div>
+  </div>
+
+  <div class="countdown-layer" id="countdown-layer" aria-hidden="true">
+    <div class="countdown-vignette"></div>
+    <div class="countdown-content">
+      <p class="countdown-kicker" id="countdown-kicker">PICK 12</p>
+      <div class="top-six-drama" id="top-six-drama" aria-hidden="true">
+<div class="top-six-kicker">LIVE LOTTERY ODDS</div><div class="top-six-odds" id="top-six-odds"></div>
+<div class="top-six-note" id="top-six-note"></div></div><div class="countdown-number" id="countdown-number">3</div>
+      <p class="countdown-subline" id="countdown-subline">LOCKING IN...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="finale-burst" id="finale-burst" aria-hidden="true">
+    <span>1</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

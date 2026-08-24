@@ -1,0 +1,2484 @@
+
+:root {
+  --black: #050505;
+  --black-2: #111;
+  --cream: #fff3c4;
+  --gold: #f7bf25;
+  --gold-2: #ffdf68;
+  --orange: #ef6c14;
+  --red: #d92516;
+  --blue: #184f9a;
+  --blue-2: #0a2b5d;
+  --green: #70d68e;
+  --pink: #ff63ae;
+  --ink: #fff5cf;
+  --muted: #cabf9b;
+  --line: rgba(255, 212, 71, .5);
+  --shadow-hard: 5px 5px 0 #000;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  min-height: 100%;
+  background: var(--black);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100svh;
+  overflow-x: hidden;
+  color: var(--ink);
+  font-family: Arial Black, Impact, Haettenschweiler, "Arial Narrow Bold", system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(217,37,22,.26), transparent 28%),
+    radial-gradient(circle at 90% 5%, rgba(24,79,154,.34), transparent 28%),
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,255,255,.018) 0 2px,
+      transparent 2px 9px
+    ),
+    #060606;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .18;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.03) 0 1px,
+      transparent 1px 3px
+    );
+  mix-blend-mode: screen;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.page-shell {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  min-height: 100svh;
+  padding: max(12px, env(safe-area-inset-top)) 10px max(142px, calc(130px + env(safe-area-inset-bottom)));
+}
+
+.masthead {
+  position: relative;
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 8px;
+  padding: 10px 8px 12px;
+  border: 3px solid #000;
+  outline: 2px solid var(--gold);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.09), transparent 24%),
+    linear-gradient(100deg, #2b0b09, #5b0b08 45%, #1e0a1f);
+  box-shadow:
+    0 0 0 3px #50100b,
+    0 7px 0 #000;
+  transform: rotate(-.35deg);
+}
+
+.promo-logo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 74px;
+  height: 74px;
+  border: 4px ridge #f8d46b;
+  background:
+    radial-gradient(circle at 50% 35%, #ffec9c, #b26b0b 44%, #3b1902 72%);
+  color: #130900;
+  text-align: center;
+  transform: rotate(-4deg);
+  box-shadow: inset 0 0 0 2px #000, var(--shadow-hard);
+}
+
+.promo-logo::before,
+.promo-logo::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #171000;
+  border-radius: 50%;
+  background: #f7d066;
+}
+
+.promo-logo::before { top: 4px; left: 4px; }
+.promo-logo::after { right: 4px; bottom: 4px; }
+
+.promo-logo-top {
+  display: block;
+  font-size: 24px;
+  line-height: .9;
+  letter-spacing: -.06em;
+}
+
+.promo-logo-year {
+  display: block;
+  margin-top: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+}
+
+.masthead-copy {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0 0 2px;
+  color: #ffd764;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 8px;
+  font-weight: 1000;
+  letter-spacing: .06em;
+}
+
+h1 {
+  margin: 0;
+  color: #fff4bc;
+  font-size: clamp(24px, 7vw, 41px);
+  line-height: .78;
+  letter-spacing: -.055em;
+  text-transform: uppercase;
+  text-shadow:
+    3px 3px 0 #000,
+    5px 5px 0 #8a1b0f;
+}
+
+h1 span {
+  color: var(--gold-2);
+  font-size: .74em;
+  letter-spacing: .01em;
+}
+
+.tagline {
+  margin: 7px 0 0;
+  color: #e5cf9c;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-style: italic;
+  font-weight: 800;
+}
+
+.masthead-badge {
+  align-self: start;
+  margin-top: -5px;
+  padding: 5px 6px;
+  border: 2px solid white;
+  color: white;
+  background: var(--red);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 1000;
+  transform: rotate(7deg);
+  box-shadow: 3px 3px 0 #000;
+}
+
+.promo-strip {
+  display: flex;
+  gap: 18px;
+  overflow: hidden;
+  margin: 0 1px 8px;
+  padding: 5px 8px;
+  border: 2px solid #000;
+  color: #111;
+  background: repeating-linear-gradient(
+    -45deg,
+    #f7be21 0 10px,
+    #ffdc61 10px 20px
+  );
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 1000;
+  white-space: nowrap;
+  box-shadow: 0 3px 0 #000;
+}
+
+.board-wrap {
+  position: relative;
+  padding: 8px;
+  border: 5px ridge #b67b18;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.035) 0 1px,
+      transparent 1px 8px
+    ),
+    linear-gradient(180deg, #301600, #160b02);
+  box-shadow:
+    inset 0 0 0 2px #000,
+    0 0 0 3px #000,
+    7px 8px 0 rgba(0,0,0,.72);
+  transform: rotate(.15deg);
+}
+
+.board-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed rgba(255,231,139,.35);
+  pointer-events: none;
+}
+
+.board-topline {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 6px 8px;
+  color: #f8d46c;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 1000;
+  letter-spacing: .08em;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.lottery-board {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pick-row {
+  --row-scale: 1;
+  display: grid;
+  grid-template-columns: 43px minmax(0, 1fr);
+  min-height: 47px;
+  perspective: 900px;
+  transform: scale(var(--row-scale));
+  transform-origin: center;
+}
+
+.pick-number {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  border: 3px ridge #f2c34a;
+  border-right-width: 2px;
+  color: #100b00;
+  background:
+    linear-gradient(180deg, #ffe37a, #c9830a 70%, #814900);
+  font-family: Impact, Arial Black, sans-serif;
+  font-size: 20px;
+  line-height: 1;
+  text-shadow: 1px 1px 0 rgba(255,255,255,.42);
+  box-shadow:
+    inset 0 0 0 1px #000,
+    2px 2px 0 #000;
+}
+
+.pick-panel {
+  position: relative;
+  min-width: 0;
+  transform-style: preserve-3d;
+}
+
+.panel-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 3px ridge #777;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px #000;
+}
+
+.panel-front {
+  justify-content: center;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.03) 0 2px,
+      transparent 2px 5px
+    ),
+    linear-gradient(180deg, #171717, #050505);
+}
+
+.panel-front::before {
+  content: "????????????????";
+  color: rgba(255, 222, 101, .19);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+}
+
+.blank-line {
+  display: none;
+}
+
+.panel-back {
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 11px;
+  transform: rotateX(180deg);
+  color: #1a1000;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.18), transparent 24%),
+    linear-gradient(90deg, #7a5f18, #a8842d 48%, #735716);
+  border-color: #d6b65a;
+  text-shadow: 1px 1px 0 rgba(255,255,255,.18);
+}
+
+
+
+.team-name {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: clamp(15px, 4.4vw, 21px);
+  font-weight: 1000;
+  letter-spacing: -.025em;
+  text-transform: uppercase;
+}
+
+.movement {
+  flex: 0 0 auto;
+  padding: 3px 6px;
+  border: 2px solid rgba(255,255,255,.6);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 1000;
+  letter-spacing: .03em;
+  box-shadow: 2px 2px 0 #000;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.4);
+}
+
+.movement.up {
+  color: #07240f !important;
+  background: #69d88b;
+  border-color: #baffcd;
+}
+
+.movement.down {
+  color: #320500 !important;
+  background: #f06a5e;
+  border-color: #ffc0b9;
+}
+
+.movement.held {
+  color: #241a03 !important;
+  background: #d8bd69;
+  border-color: #f6dda0;
+}
+
+.pick-row.revealed .pick-panel {
+  animation: boardFlip .9s cubic-bezier(.18,.78,.2,1) forwards;
+}
+
+.pick-row.revealed {
+  animation: revealPulse 1.05s ease both;
+}
+
+.pick-row.awaiting {
+  --row-scale: 1.02;
+}
+
+.pick-row.awaiting .pick-number {
+  animation: awaitingGlow .62s steps(2, end) infinite;
+}
+
+.pick-row.awaiting .panel-front {
+  animation: awaitingJitter .9s steps(2, end) infinite;
+}
+
+.pick-row.big-reveal .pick-panel {
+  animation-duration: 1.1s;
+}
+
+.pick-row.final-reveal {
+  --row-scale: 1.03;
+}
+
+.pick-row.final-reveal .panel-back,
+.pick-row.final-reveal .pick-number {
+  color: #130b00;
+  background:
+    linear-gradient(180deg, #fff7bc, #ffd85a 44%, #e59c09 72%, #8e5203);
+  border-color: #fff1a0;
+  text-shadow: 1px 1px 0 rgba(255,255,255,.55);
+  box-shadow:
+    inset 0 0 0 1px #000,
+    0 0 18px rgba(255,216,90,.5),
+    3px 3px 0 #000;
+}
+
+@keyframes boardFlip {
+  0% { transform: rotateX(0deg) scale(1); }
+  20% { transform: rotateX(-16deg) scale(1.03); }
+  42% { transform: rotateX(88deg) scale(.96); }
+  60% { transform: rotateX(106deg) scale(.97); }
+  78% { transform: rotateX(170deg) scale(1.02); }
+  100% { transform: rotateX(180deg) scale(1); }
+}
+
+@keyframes revealPulse {
+  0% { filter: brightness(1); }
+  25% { filter: brightness(2.1) contrast(1.25); }
+  50% { transform: scale(1.018) rotate(-.25deg); }
+  100% { filter: brightness(1); transform: scale(1); }
+}
+
+@keyframes awaitingGlow {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.45); }
+}
+
+@keyframes awaitingJitter {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(1px); }
+}
+
+.control-dock {
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  width: min(100%, 760px);
+  margin: 0 auto;
+  padding: 8px 10px max(8px, env(safe-area-inset-bottom));
+  border-top: 4px ridge #bc811d;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.025) 0 1px,
+      transparent 1px 8px
+    ),
+    #120b03;
+  box-shadow: 0 -6px 0 #000;
+}
+
+.status-copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.status-kicker {
+  color: var(--gold-2);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 1000;
+  letter-spacing: .09em;
+}
+
+.status-copy strong {
+  color: #fff2c1;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 1.18;
+  white-space: normal;
+}
+
+.dock-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.primary-action,
+.odds-action {
+  min-height: 48px;
+  border: 3px outset #f8cf56;
+  color: #160c00;
+  background:
+    linear-gradient(180deg, #ffe681, #f4a817 65%, #bc6504);
+  box-shadow: 3px 3px 0 #000;
+  font-size: 10px;
+  font-weight: 1000;
+  letter-spacing: .03em;
+  cursor: pointer;
+  text-shadow: 1px 1px 0 rgba(255,255,255,.34);
+}
+
+.primary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 126px;
+  padding: 0 13px;
+}
+
+.odds-action {
+  padding: 0 10px;
+  color: white;
+  border-color: #9abdf3;
+  background:
+    linear-gradient(180deg, #356cb0, #143a77 65%, #081f47);
+  text-shadow: 2px 2px 0 #000;
+}
+
+.primary-action:active,
+.odds-action:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+.primary-action:disabled {
+  filter: grayscale(.6) brightness(.7);
+  cursor: wait;
+}
+
+.odds-action[hidden] {
+  display: none;
+}
+
+/* Odds modal = cheap televised stat graphic */
+.odds-layer {
+  position: fixed;
+  z-index: 110;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  padding: 6px 10px;
+  background:
+    radial-gradient(circle at center, rgba(111,21,10,.33), transparent 38%),
+    rgba(0,0,0,.9);
+  transition: opacity .15s ease, visibility .15s ease;
+}
+
+.odds-layer.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.odds-card {
+  width: min(100%, 620px);
+  max-height: 98vh;
+  margin: 0 auto;
+  overflow: auto;
+  border: 5px ridge #c78b24;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.025) 0 2px,
+      transparent 2px 5px
+    ),
+    #100b05;
+  box-shadow:
+    inset 0 0 0 2px #000,
+    7px 7px 0 #000;
+}
+
+.odds-header {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 13px 10px;
+  border-bottom: 4px ridge #b67c18;
+  background:
+    linear-gradient(100deg, #4a0e08, #7f170d 50%, #2a0a0a);
+}
+
+.odds-eyebrow {
+  margin: 0 0 2px;
+  color: var(--gold-2);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 1000;
+  letter-spacing: .12em;
+}
+
+.odds-header h2 {
+  margin: 0;
+  color: #fff0a9;
+  font-size: 27px;
+  line-height: .9;
+  text-transform: uppercase;
+  text-shadow: 3px 3px 0 #000;
+}
+
+.odds-description {
+  margin: 7px 0 0;
+  color: #ead6a9;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.odds-close {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 3px outset #aaa;
+  color: white;
+  background: #2a2a2a;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.odds-summary {
+  padding: 9px 12px 7px;
+  color: #160c00;
+  background: var(--gold);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+
+.odds-list {
+  display: grid;
+  gap: 3px;
+  padding: 6px;
+}
+
+.odds-row {
+  display: grid;
+  grid-template-columns: 25px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 55px;
+  padding: 7px 8px;
+  border: 2px ridge #586b7e;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), transparent 20%),
+    #0b2548;
+}
+
+.odds-row:nth-child(even) {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), transparent 20%),
+    #3e150f;
+}
+
+.odds-rank {
+  color: var(--gold-2);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 1000;
+}
+
+.odds-team {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.odds-team strong {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.odds-team span {
+  color: #d4c9ad;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+}
+
+.odds-percent {
+  color: var(--gold-2);
+  font-family: Impact, Arial Black, sans-serif;
+  font-size: 18px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.odds-empty {
+  padding: 24px 12px 28px;
+  color: #d9cba7;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* Countdown = bargain-bin wrestling entrance graphic */
+.countdown-layer {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.025) 0 2px,
+      transparent 2px 8px
+    ),
+    radial-gradient(circle at 50% 50%, #3f0907, #050505 62%);
+  transition: opacity .12s ease, visibility .12s ease;
+}
+
+.countdown-layer::before,
+.countdown-layer::after {
+  content: "TFC • TFC • TFC • TFC • TFC • TFC";
+  position: absolute;
+  left: -15%;
+  width: 130%;
+  padding: 5px 0;
+  color: #120900;
+  background: var(--gold);
+  font-family: Impact, Arial Black, sans-serif;
+  font-size: 14px;
+  letter-spacing: .16em;
+  text-align: center;
+  transform: rotate(-4deg);
+  box-shadow: 0 4px 0 #000;
+}
+
+.countdown-layer::before { top: 11%; }
+.countdown-layer::after {
+  bottom: 11%;
+  transform: rotate(4deg);
+}
+
+.countdown-layer.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.countdown-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, transparent 0 26%, rgba(0,0,0,.12) 27%, transparent 31%),
+    repeating-radial-gradient(circle at center, rgba(255,214,74,.07) 0 1px, transparent 1px 14px);
+}
+
+.countdown-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  width: min(86%, 520px);
+  text-align: center;
+}
+
+.countdown-kicker {
+  margin: 0;
+  padding: 5px 10px;
+  border: 2px solid #fff2a6;
+  color: #fff2a6;
+  background: #9f1b10;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 1000;
+  letter-spacing: .14em;
+  box-shadow: 4px 4px 0 #000;
+  transform: rotate(-2deg);
+}
+
+.countdown-number {
+  display: grid;
+  place-items: center;
+  width: min(66vw, 270px);
+  aspect-ratio: 1;
+  border: 8px ridge #f4c84d;
+  border-radius: 50%;
+  color: #ffe76f;
+  background:
+    radial-gradient(circle, #6a120b 0 38%, #1b0805 39% 62%, #050505 63%);
+  font-family: Impact, Arial Black, sans-serif;
+  font-size: clamp(110px, 40vw, 190px);
+  line-height: 1;
+  text-shadow:
+    5px 5px 0 #000,
+    8px 8px 0 #9e1d10;
+  box-shadow:
+    0 0 0 5px #000,
+    0 0 0 9px #7c5006,
+    0 0 60px rgba(247,191,37,.25);
+}
+
+.countdown-subline {
+  margin: 0;
+  color: white;
+  font-family: Impact, Arial Black, sans-serif;
+  font-size: 18px;
+  letter-spacing: .06em;
+  text-shadow: 3px 3px 0 #000;
+  transform: rotate(1deg);
+}
+
+.countdown-layer.tick .countdown-number {
+  animation: countdownTick .68s cubic-bezier(.12,.77,.19,1) both;
+}
+
+.countdown-layer.tick .countdown-content {
+  animation: cheapCameraShake .22s linear 2;
+}
+
+.countdown-layer.top-three {
+  background:
+    radial-gradient(circle at center, #603c05, #170900 52%, #030303 73%);
+}
+
+.countdown-layer.number-one {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,220,83,.07) 0 6px,
+      transparent 6px 12px
+    ),
+    radial-gradient(circle at center, #82570b, #1a0c01 50%, #020202 76%);
+}
+
+.countdown-layer.number-one .countdown-kicker {
+  font-size: 14px;
+  color: #150a00;
+  background: #ffd85d;
+  border-color: white;
+}
+
+@keyframes countdownTick {
+  0% { transform: scale(.32) rotate(-10deg); opacity: 0; }
+  32% { transform: scale(1.24) rotate(4deg); opacity: 1; }
+  54% { transform: scale(.95) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes cheapCameraShake {
+  0% { transform: translate(0,0); }
+  25% { transform: translate(-4px,2px); }
+  50% { transform: translate(3px,-2px); }
+  75% { transform: translate(-2px,-1px); }
+  100% { transform: translate(0,0); }
+}
+
+.finale-burst {
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(255,220,80,.28) 0 8deg,
+      transparent 8deg 16deg
+    );
+}
+
+.finale-burst.active {
+  visibility: visible;
+  animation: finaleFlash 1.5s ease both;
+}
+
+.finale-burst span {
+  color: #ffd94f;
+  font-family: Impact, Arial Black, sans-serif;
+  font-size: min(95vw, 670px);
+  line-height: 1;
+  text-shadow:
+    8px 8px 0 #000,
+    14px 14px 0 #8d160d;
+}
+
+@keyframes finaleFlash {
+  0% { opacity: 0; transform: scale(.5) rotate(-8deg); }
+  20% { opacity: 1; transform: scale(1.1) rotate(2deg); }
+  55% { opacity: .9; transform: scale(.98) rotate(-1deg); }
+  100% { opacity: 0; transform: scale(1.28) rotate(0); }
+}
+
+body.suspense::before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(247,191,37,.13), transparent 31%);
+  animation: suspenseBg .72s steps(2,end) infinite;
+}
+
+@keyframes suspenseBg {
+  from { opacity: .25; }
+  to { opacity: 1; }
+}
+
+.lottery-board.draft-order-mode .pick-row:first-child {
+  --row-scale: 1.025;
+}
+
+.lottery-board.draft-order-mode .pick-row:first-child .pick-number,
+.lottery-board.draft-order-mode .pick-row:first-child .panel-back {
+  filter: brightness(1.18) saturate(1.16);
+}
+
+@media (min-width: 560px) {
+  .page-shell {
+    padding-inline: 18px;
+  }
+
+  .pick-row {
+    min-height: 51px;
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .control-dock {
+    padding-inline: 18px;
+  }
+
+  .status-copy strong {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 390px) {
+  .masthead {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+  }
+
+  .promo-logo {
+    width: 61px;
+    height: 61px;
+  }
+
+  .promo-logo-top {
+    font-size: 20px;
+  }
+
+  .tagline {
+    display: none;
+  }
+
+  .primary-action {
+    min-width: 112px;
+    padding-inline: 10px;
+  }
+
+  .odds-action {
+    padding-inline: 8px;
+  }
+
+  .status-copy strong {
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+
+/* Extra life */
+.board-wrap {
+  animation: boardBreath 3.8s ease-in-out infinite alternate;
+}
+
+@keyframes boardBreath {
+  from { filter: brightness(.96); }
+  to { filter: brightness(1.06); }
+}
+
+.promo-logo {
+  animation: logoWobble 2.6s ease-in-out infinite alternate;
+}
+
+@keyframes logoWobble {
+  from { transform: rotate(-4deg) scale(1); }
+  to { transform: rotate(-1deg) scale(1.025); }
+}
+
+.masthead-badge {
+  animation: liveBlink 1.2s steps(2, end) infinite;
+}
+
+@keyframes liveBlink {
+  0%, 55% { filter: brightness(1); }
+  56%, 100% { filter: brightness(1.55); }
+}
+
+.promo-strip span:nth-child(2) {
+  animation: promoPulse 1.9s ease-in-out infinite alternate;
+}
+
+@keyframes promoPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+.sound-action {
+  min-height: 48px;
+  padding: 0 9px;
+  border: 3px outset #8f8f8f;
+  color: #fff7d5;
+  background: linear-gradient(180deg, #343434, #171717 70%, #080808);
+  box-shadow: 3px 3px 0 #000;
+  font-size: 11px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.sound-action[aria-pressed="false"] {
+  opacity: .58;
+}
+
+.sound-action:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+body.reveal-hit .board-wrap {
+  animation: revealBoardHit .34s ease both;
+}
+
+@keyframes revealBoardHit {
+  0% { transform: rotate(.15deg) scale(1); }
+  35% { transform: rotate(-.7deg) scale(1.012); }
+  65% { transform: rotate(.55deg) scale(.997); }
+  100% { transform: rotate(.15deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board-wrap,
+  .promo-logo,
+  .masthead-badge,
+  .promo-strip span:nth-child(2) {
+    animation: none !important;
+  }
+}
+
+
+.team-burst-button {
+  appearance: none;
+  display: grid;
+  grid-template-columns: 43px minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
+  min-height: 47px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  text-align: inherit;
+  font: inherit;
+  perspective: inherit;
+}
+.team-burst-button:disabled { cursor: default; }
+.pick-row.revealed .team-burst-button:not(:disabled) { cursor: pointer; }
+.pick-row.revealed .team-burst-button:not(:disabled):active { transform: scale(.985) rotate(.15deg); }
+
+.team-identity {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 7px;
+}
+.team-emoji {
+  flex: 0 0 auto;
+  font-size: 20px;
+  line-height: 1;
+  filter: drop-shadow(1px 2px 0 rgba(0,0,0,.35));
+}
+
+.emoji-particle {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  width: 1em;
+  height: 1em;
+  margin: -.5em 0 0 -.5em;
+  font-size: clamp(24px, 8vw, 46px);
+  line-height: 1;
+  transform-origin: center;
+  animation: emojiExplosion var(--burst-duration, 900ms) cubic-bezier(.13,.74,.26,1) forwards;
+  will-change: transform, opacity;
+}
+@keyframes emojiExplosion {
+  0% { opacity: 0; transform: translate(0,0) rotate(0deg) scale(.3); }
+  12% { opacity: 1; }
+  70% {
+    opacity: 1;
+    transform: translate(var(--burst-x), var(--burst-y)) rotate(var(--burst-rotate)) scale(var(--burst-scale));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--burst-x) * 1.12), calc(var(--burst-y) + 95px))
+      rotate(var(--burst-rotate)) scale(calc(var(--burst-scale) * .8));
+  }
+}
+
+.reaction-marquee {
+  position: absolute;
+  z-index: 10;
+  inset: -3px;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
+  border: 4px ridge #f7cb4a;
+  background:
+    radial-gradient(circle at 8px 8px, #ffe98c 0 2px, #9d5f08 2.5px 4px, transparent 4.5px) 0 0 / 16px 16px,
+    linear-gradient(180deg, #461108, #1b0804);
+  box-shadow: inset 0 0 0 3px #000, 0 0 0 2px #000, 0 7px 0 #000;
+  pointer-events: none;
+}
+
+.reaction-marquee.active {
+  visibility: visible;
+  animation: marqueeFlash 1.65s steps(1, end) both;
+}
+
+.reaction-marquee-inner {
+  width: calc(100% - 34px);
+  padding: 10px 8px;
+  border: 3px solid #150b00;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 4px), #090503;
+  text-align: center;
+  box-shadow: inset 0 0 22px #000, 0 0 0 2px #d89c1e;
+}
+
+.reaction-marquee span {
+  display: inline-block;
+  max-width: 100%;
+  color: transparent;
+  background: radial-gradient(circle, #fff7bd 0 1.8px, #ffb913 2px 3px, transparent 3.4px) 0 0 / 7px 7px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(32px, 10.5vw, 70px);
+  line-height: .95;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+  filter: drop-shadow(2px 2px 0 #000) drop-shadow(0 0 7px rgba(255,202,55,.85));
+}
+
+@keyframes marqueeFlash {
+  0% { opacity: 0; filter: brightness(.55); }
+  8% { opacity: 1; filter: brightness(1.7); }
+  20% { opacity: .35; filter: brightness(.7); }
+  31% { opacity: 1; filter: brightness(1.5); }
+  45% { opacity: .7; filter: brightness(.9); }
+  55% { opacity: 1; filter: brightness(1.35); }
+  84% { opacity: 1; filter: brightness(1); }
+  100% { opacity: 0; filter: brightness(.4); }
+}
+
+@media (min-width: 560px) {
+  .team-burst-button {
+    grid-template-columns: 52px minmax(0, 1fr);
+    min-height: 51px;
+  }
+}
+
+
+/* v7 tile-width fix:
+   The whole burst button must span the original pick-row grid. */
+.pick-row > .team-burst-button {
+  grid-column: 1 / -1;
+  min-width: 0;
+  width: 100%;
+}
+
+
+/* v7.2: particle motion is driven directly by Web Animations for reliability. */
+.emoji-particle {
+  position: fixed !important;
+  z-index: 99999 !important;
+  pointer-events: none !important;
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  font-size: clamp(28px, 8vw, 50px) !important;
+  line-height: 1 !important;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.emoji-pop {
+  z-index: 100000 !important;
+  font-size: clamp(48px, 15vw, 92px) !important;
+}
+
+
+/* v7.3 — unmistakable "🎉 tada" effect. */
+.tada-layer {
+  position: fixed;
+  z-index: 2147483000;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tada-center {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .08em;
+  transform: translate(-50%, -50%) scale(.15) rotate(-10deg);
+  opacity: 0;
+  font-size: clamp(58px, 16vw, 116px);
+  filter: drop-shadow(5px 7px 0 rgba(0,0,0,.5));
+}
+
+.tada-center.go {
+  animation: tadaCenterPop 720ms cubic-bezier(.12,.8,.2,1) both;
+}
+
+.tada-team,
+.tada-pop {
+  display: inline-block;
+}
+
+.tada-pop {
+  font-size: .72em;
+}
+
+@keyframes tadaCenterPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.15) rotate(-10deg);
+  }
+  28% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.38) rotate(6deg);
+  }
+  52% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(.98) rotate(-2deg);
+  }
+  76% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08) rotate(1deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -58%) scale(.82) rotate(0deg);
+  }
+}
+
+.tada-piece {
+  position: fixed;
+  display: block;
+  opacity: 0;
+  font-size: clamp(24px, 7vw, 48px);
+  line-height: 1;
+  transform: translate(-50%, -50%) scale(.2);
+  filter: drop-shadow(2px 3px 0 rgba(0,0,0,.35));
+}
+
+.tada-piece.go {
+  animation: tadaBurst 1150ms cubic-bezier(.12,.72,.2,1) var(--delay) both;
+}
+
+@keyframes tadaBurst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(0,0) rotate(0deg) scale(.2);
+  }
+  10% {
+    opacity: 1;
+  }
+  62% {
+    opacity: 1;
+    transform:
+      translate(-50%, -50%)
+      translate(var(--x), var(--y))
+      rotate(var(--r))
+      scale(var(--s));
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      translate(var(--x), calc(var(--y) + 125px))
+      rotate(calc(var(--r) * 1.3))
+      scale(calc(var(--s) * .78));
+  }
+}
+
+.tada-rain {
+  position: fixed;
+  top: -60px;
+  display: block;
+  opacity: 0;
+  font-size: clamp(21px, 6vw, 40px);
+  line-height: 1;
+  filter: drop-shadow(1px 2px 0 rgba(0,0,0,.25));
+}
+
+.tada-rain.go {
+  animation: tadaRain var(--fall) linear var(--delay) both;
+}
+
+@keyframes tadaRain {
+  0% {
+    opacity: 0;
+    transform: translate(0, -40px) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift), 105vh) rotate(var(--spin));
+  }
+}
+
+
+/* Countdown setting control */
+.countdown-action {
+  min-height: 48px;
+  padding: 0 9px;
+  border: 3px outset #8f8f8f;
+  color: #fff7d5;
+  background: linear-gradient(180deg, #343434, #171717 70%, #080808);
+  box-shadow: 3px 3px 0 #000;
+  font-size: 10px;
+  font-weight: 1000;
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+
+.countdown-action[aria-pressed="false"] {
+  opacity: .58;
+}
+
+.countdown-action:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
+}
+
+/* v7.4 marquee timing:
+   fade in -> flash once -> steady hold -> fade out */
+.reaction-marquee.active {
+  visibility: visible;
+  opacity: 1;
+  animation: marqueeOneFlash 850ms ease both !important;
+}
+
+.reaction-marquee.holding {
+  visibility: visible;
+  opacity: 1;
+  filter: brightness(1);
+}
+
+.reaction-marquee.leaving {
+  visibility: visible;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+@keyframes marqueeOneFlash {
+  0% {
+    opacity: 0;
+    filter: brightness(.7);
+  }
+  26% {
+    opacity: 1;
+    filter: brightness(1.65);
+  }
+  42% {
+    opacity: 1;
+    filter: brightness(.82);
+  }
+  58% {
+    opacity: 1;
+    filter: brightness(1.45);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+
+/* v7.5 — LIVE ODDS: monochrome sportsbook / chrome board */
+.odds-row {
+  color: #f1f1f1 !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08), transparent 28%),
+    linear-gradient(90deg, #292929, #3b3b3b 48%, #252525) !important;
+  border-color: #686868 !important;
+  box-shadow:
+    inset 0 0 0 1px #111,
+    inset 0 1px 0 rgba(255,255,255,.12),
+    2px 2px 0 #000 !important;
+  text-shadow: 1px 2px 0 #000 !important;
+}
+
+/* Kill any previous alternating-color rules. */
+.odds-row:nth-child(odd),
+.odds-row:nth-child(even),
+.odds-row:nth-child(3n + 1),
+.odds-row:nth-child(3n + 2),
+.odds-row:nth-child(3n + 3) {
+  color: #f1f1f1 !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08), transparent 28%),
+    linear-gradient(90deg, #292929, #3b3b3b 48%, #252525) !important;
+  border-color: #686868 !important;
+}
+
+/* #1 live odds team: hotter chrome / silver / sparkly arcade treatment */
+.odds-row:first-child {
+  position: relative;
+  overflow: hidden;
+  color: #080808 !important;
+  background:
+    radial-gradient(circle at 12% 22%, rgba(255,255,255,.95) 0 1px, transparent 2px),
+    radial-gradient(circle at 74% 68%, rgba(255,255,255,.9) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 91% 28%, rgba(255,255,255,.8) 0 1px, transparent 2px),
+    linear-gradient(
+      115deg,
+      #626262 0%,
+      #f8f8f8 18%,
+      #8b8b8b 32%,
+      #ffffff 46%,
+      #777777 59%,
+      #ededed 76%,
+      #969696 100%
+    ) !important;
+  background-size:
+    43px 31px,
+    57px 41px,
+    71px 47px,
+    100% 100% !important;
+  border-color: #f8f8f8 !important;
+  box-shadow:
+    inset 0 0 0 1px #2b2b2b,
+    inset 0 2px 0 rgba(255,255,255,.9),
+    0 0 10px rgba(255,255,255,.38),
+    2px 2px 0 #000 !important;
+  text-shadow:
+    1px 1px 0 rgba(255,255,255,.65),
+    0 0 4px rgba(255,255,255,.5) !important;
+  animation: silverOddsHot 1.8s ease-in-out infinite alternate;
+}
+
+.odds-row:first-child::after {
+  content: "";
+  position: absolute;
+  inset: -60% -35%;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 38%,
+    rgba(255,255,255,0) 43%,
+    rgba(255,255,255,.85) 49%,
+    rgba(255,255,255,.18) 54%,
+    transparent 60%
+  );
+  transform: translateX(-65%) rotate(3deg);
+  animation: silverOddsShine 2.5s ease-in-out infinite;
+}
+
+@keyframes silverOddsHot {
+  from { filter: brightness(.96) contrast(1.04); }
+  to   { filter: brightness(1.13) contrast(1.12); }
+}
+
+@keyframes silverOddsShine {
+  0%, 25% { transform: translateX(-65%) rotate(3deg); opacity: 0; }
+  36% { opacity: 1; }
+  65% { transform: translateX(65%) rotate(3deg); opacity: .85; }
+  76%, 100% { transform: translateX(65%) rotate(3deg); opacity: 0; }
+}
+
+
+/* v7.7 — readable "hot silver" live-odds leader.
+   Keep the chrome/sparkle, but give the actual content a dark plate. */
+.odds-row:first-child {
+  color: #111 !important;
+  background:
+    radial-gradient(circle at 8% 20%, rgba(255,255,255,.95) 0 1px, transparent 2px),
+    radial-gradient(circle at 32% 74%, rgba(255,255,255,.9) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 79% 24%, rgba(255,255,255,.95) 0 1px, transparent 2px),
+    radial-gradient(circle at 94% 68%, rgba(255,255,255,.85) 0 1.2px, transparent 2.2px),
+    linear-gradient(115deg, #777 0%, #d9d9d9 18%, #929292 33%, #f5f5f5 48%, #858585 64%, #d2d2d2 82%, #777 100%) !important;
+}
+
+/* Dark translucent backing behind the team-name/details area. */
+.odds-row:first-child .odds-team {
+  position: relative;
+  z-index: 2;
+  margin: 5px 0;
+  padding: 5px 10px;
+  border-left: 3px solid rgba(255,255,255,.9);
+  background: rgba(12,12,12,.78);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.14),
+    2px 2px 0 rgba(0,0,0,.5);
+}
+
+/* Force all text inside that content plate to read cleanly. */
+.odds-row:first-child .odds-team,
+.odds-row:first-child .odds-team-name,
+.odds-row:first-child .odds-detail {
+  color: #fff !important;
+  text-shadow: 2px 2px 0 #000 !important;
+}
+
+/* Ranking number gets its own dark badge. */
+.odds-row:first-child .odds-rank {
+  position: relative;
+  z-index: 2;
+  color: #fff !important;
+  text-shadow: 2px 2px 0 #000 !important;
+}
+
+/* Odds number: dark ink with a pale outline instead of yellow-on-silver. */
+.odds-row:first-child .odds-percent {
+  position: relative;
+  z-index: 2;
+  color: #111 !important;
+  -webkit-text-stroke: 1px rgba(255,255,255,.75);
+  text-shadow:
+    1px 1px 0 #fff,
+    2px 2px 0 rgba(0,0,0,.25) !important;
+}
+
+/* Shine passes behind content, never washes the letters out. */
+.odds-row:first-child::after {
+  z-index: 1 !important;
+}
+
+/* v8 readable dark-silver odds leader */
+.odds-row:first-child,.odds-row:first-child:nth-child(odd),.odds-row:first-child:nth-child(even){
+position:relative;overflow:hidden;color:#f7f7f7!important;
+background:linear-gradient(180deg,rgba(255,255,255,.12),transparent 30%),linear-gradient(90deg,#303030,#4a4a4a 48%,#2d2d2d)!important;
+border-color:#aaa!important;box-shadow:inset 0 0 0 1px #111,inset 0 1px 0 rgba(255,255,255,.3),0 0 8px rgba(220,220,220,.2),2px 2px 0 #000!important;
+text-shadow:2px 2px 0 #000!important;animation:leaderPulse 1.8s ease-in-out infinite alternate}
+.odds-row:first-child .odds-team{margin:0;padding:0;border-left:0;background:transparent;box-shadow:none}
+.odds-row:first-child .odds-team,.odds-row:first-child .odds-team-name,.odds-row:first-child .odds-detail,.odds-row:first-child .odds-rank{color:#fff!important;text-shadow:2px 2px 0 #000!important}
+.odds-row:first-child .odds-percent{color:#fff4a8!important;-webkit-text-stroke:0;text-shadow:2px 2px 0 #000!important}
+.odds-row:first-child::after{content:"";position:absolute;z-index:1;inset:-70% -35%;pointer-events:none;background:linear-gradient(110deg,transparent 41%,rgba(255,255,255,0) 45%,rgba(255,255,255,.28) 49%,rgba(255,255,255,.08) 53%,transparent 58%);transform:translateX(-65%) rotate(3deg);animation:leaderSweep 2.7s ease-in-out infinite}
+.odds-row:first-child>*{position:relative;z-index:2}
+@keyframes leaderPulse{from{filter:brightness(1)}to{filter:brightness(1.08)}}
+@keyframes leaderSweep{0%,27%{transform:translateX(-65%) rotate(3deg);opacity:0}38%{opacity:1}65%{transform:translateX(65%) rotate(3deg);opacity:.9}77%,100%{transform:translateX(65%) rotate(3deg);opacity:0}}
+
+/* top-six countdown takeover */
+.top-six-drama{display:none}
+.countdown-layer.top-six-mode{padding:14px;background:radial-gradient(circle at 50% 20%,rgba(196,145,28,.18),transparent 34%),rgba(5,4,3,.96)}
+.countdown-layer.top-six-mode .countdown-card{width:min(95vw,620px);max-height:95vh;padding:14px;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"drama number" "label number";align-items:center;gap:9px 15px;overflow:hidden}
+.countdown-layer.top-six-mode .top-six-drama.active{grid-area:drama;display:block;min-width:0}
+.countdown-layer.top-six-mode .countdown-number{grid-area:number;font-size:clamp(76px,23vw,170px)}
+.countdown-layer.top-six-mode .countdown-label{grid-area:label;text-align:left}
+.top-six-kicker{margin-bottom:6px;color:#f4c33e;font-family:ui-monospace,monospace;font-size:11px;font-weight:1000;letter-spacing:.08em}
+.top-six-odds{display:grid;gap:3px}
+.top-six-odds-row{display:flex;justify-content:space-between;gap:8px;padding:5px 7px;border:1px solid #555;color:#eee;background:linear-gradient(90deg,#242424,#353535);font-family:Impact,"Arial Black",sans-serif;font-size:clamp(10px,2.6vw,14px);line-height:1;box-shadow:1px 1px 0 #000}
+.top-six-odds-row.leader{border-color:#bbb;background:linear-gradient(90deg,#393939,#555,#373737)}
+.top-six-team{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.top-six-pct{flex:0 0 auto;color:#ffe06c}
+.top-six-note{margin-top:9px;padding:8px;border:2px solid #d19c21;color:#fff2bd;background:#3b130b;font-family:Impact,"Arial Black",sans-serif;font-size:clamp(13px,3.8vw,19px);line-height:1.05;text-transform:uppercase;box-shadow:3px 3px 0 #000}
+@media(max-width:460px){.countdown-layer.top-six-mode .countdown-card{grid-template-columns:minmax(0,1fr) 68px;gap:7px}.countdown-layer.top-six-mode .countdown-number{font-size:72px}.top-six-odds-row{padding:4px 5px;font-size:9px}}
+
+
+/* v8.3 — Top-six transition polish:
+   Live odds are the hero; countdown becomes a small corner broadcast bug. */
+.countdown-layer.top-six-mode .countdown-card {
+  position: relative;
+  display: block !important;
+  width: min(92vw, 590px);
+  max-height: 82vh;
+  padding: 18px 18px 20px;
+  overflow: visible;
+}
+
+.countdown-layer.top-six-mode .top-six-drama.active {
+  display: block;
+  width: 100%;
+  padding-right: 76px;
+}
+
+.countdown-layer.top-six-mode .countdown-number {
+  position: absolute;
+  z-index: 8;
+  top: 12px;
+  right: 12px;
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  border: 4px solid #e5ad25;
+  border-radius: 50%;
+  color: #ffe77a;
+  background:
+    radial-gradient(circle at 50% 45%, #8c1c12 0 42%, #260705 44% 68%, #080808 70%);
+  box-shadow:
+    inset 0 0 0 3px #080808,
+    0 0 0 3px #f2c342,
+    4px 5px 0 rgba(0,0,0,.8);
+  font-size: 42px !important;
+  line-height: 1;
+  text-align: center;
+  text-shadow: 3px 3px 0 #7a0c08;
+  transform: none;
+}
+
+.countdown-layer.top-six-mode .countdown-label {
+  margin-top: 9px;
+  padding-right: 76px;
+  text-align: left;
+}
+
+/* The crime-scene tape is now the commentary banner. */
+.countdown-layer.top-six-mode .top-six-note {
+  display: none !important;
+}
+
+.countdown-layer.top-six-mode .countdown-tape {
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: clamp(12px, 3vw, 18px);
+  font-weight: 1000;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 460px) {
+  .countdown-layer.top-six-mode .countdown-card {
+    width: 94vw;
+    padding: 13px 12px 16px;
+  }
+
+  .countdown-layer.top-six-mode .top-six-drama.active {
+    padding-right: 58px;
+  }
+
+  .countdown-layer.top-six-mode .countdown-number {
+    top: 9px;
+    right: 9px;
+    width: 48px;
+    height: 48px;
+    border-width: 3px;
+    font-size: 31px !important;
+  }
+
+  .countdown-layer.top-six-mode .countdown-label {
+    padding-right: 58px;
+  }
+}
+
+
+/* v9 — mobile-first app shell: masthead stays put, board is the scrolling region. */
+body {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.page-shell,
+.site-shell,
+.app-shell,
+main {
+  max-height: 100dvh;
+}
+
+/* Keep the page's top presentation area visible while results move beneath it. */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.board-shell,
+.board-wrap,
+.board-container {
+  min-height: 0;
+}
+
+/* The actual board becomes independently scrollable. */
+.board {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Whole next-pick row flashes and doubles as the reveal control. */
+.pick-row.awaiting {
+  position: relative;
+  cursor: pointer;
+  animation: nextPickWholeRow 1s steps(2, end) infinite;
+}
+
+.pick-row.awaiting::after {
+  content: "";
+  position: absolute;
+  z-index: 20;
+  inset: -3px;
+  pointer-events: none;
+  border: 3px solid #fff2a0;
+  box-shadow:
+    0 0 0 2px #d69d17,
+    0 0 12px rgba(255,214,67,.85),
+    inset 0 0 9px rgba(255,224,94,.38);
+}
+
+.pick-row.awaiting .team-burst-button {
+  cursor: pointer;
+}
+
+@keyframes nextPickWholeRow {
+  0%, 45% { filter: brightness(1); }
+  46%, 100% { filter: brightness(1.32); }
+}
+
+/* Catastrophic 4+ spot drop: arcade death / kill screen. */
+.kill-screen {
+  position: fixed;
+  z-index: 2147483500;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  opacity: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 4px),
+    radial-gradient(circle at center, #65120d 0, #210605 42%, #020202 78%);
+  pointer-events: none;
+  transition: opacity 120ms linear;
+}
+
+.kill-screen.active { opacity: 1; }
+.kill-screen.leaving { opacity: 0; transition-duration: 280ms; }
+
+.kill-screen-card {
+  position: relative;
+  width: min(88vw, 520px);
+  padding: 22px 16px;
+  border: 5px double #ffcf3f;
+  color: #fff0bc;
+  background: rgba(10,0,0,.84);
+  text-align: center;
+  box-shadow: 0 0 0 4px #000, 0 0 30px rgba(255,35,12,.45);
+  animation: killGlitch 180ms steps(2,end) 4;
+}
+
+.kill-screen-kicker {
+  color: #ff3b22;
+  font: 1000 clamp(19px,6vw,34px)/1 Impact,"Arial Black",sans-serif;
+  letter-spacing: .08em;
+  text-shadow: 3px 3px 0 #000;
+}
+
+.kill-screen-emoji { margin: 12px 0 5px; font-size: clamp(38px,12vw,72px); }
+.kill-screen-name { font: 1000 clamp(25px,8vw,48px)/.95 Impact,"Arial Black",sans-serif; text-transform: uppercase; }
+.kill-screen-drop { margin-top: 12px; color: #ff3b22; font: 1000 clamp(30px,10vw,64px)/1 Impact,"Arial Black",sans-serif; text-shadow: 3px 3px 0 #000; }
+.kill-screen-message { margin-top: 6px; font: 1000 clamp(16px,5vw,27px)/1 Impact,"Arial Black",sans-serif; }
+
+@keyframes killGlitch {
+  0% { transform: translate(0) skew(0); filter: none; }
+  25% { transform: translate(-5px,2px) skew(-1deg); filter: contrast(1.5); }
+  50% { transform: translate(5px,-2px) skew(1deg); }
+  75% { transform: translate(-2px,-1px); }
+  100% { transform: translate(0); }
+}
+
+/* Final pick: no fake one-team odds board. */
+.top-six-drama.final-countdown {
+  padding: 26px 10px 20px !important;
+  text-align: center;
+}
+
+.top-six-drama.final-countdown .top-six-kicker {
+  margin: 0;
+  color: #ffe35f;
+  font: 1000 clamp(28px,8vw,58px)/.95 Impact,"Arial Black",sans-serif;
+  letter-spacing: .02em;
+  text-shadow: 4px 4px 0 #8c120c, 7px 7px 0 #000;
+}
+
+.top-six-drama.final-countdown .top-six-odds {
+  display: none;
+}
+
+#board {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* v9.1 — revert experimental board-only scrolling.
+   Return to normal document scrolling; sticky masthead remains natural. */
+html,
+body {
+  height: auto !important;
+  min-height: 100%;
+  overflow: visible !important;
+}
+
+.page-shell,
+.site-shell,
+.app-shell,
+main {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.board,
+#board,
+.board-shell,
+.board-wrap,
+.board-container {
+  max-height: none !important;
+  overflow: visible !important;
+  overscroll-behavior: auto !important;
+  scroll-behavior: auto !important;
+}
+
+/* Top-six live odds should dominate the takeover screen. */
+.countdown-layer.top-six-mode .countdown-card {
+  width: min(96vw, 820px) !important;
+  max-height: 96vh !important;
+  padding: 18px 20px 22px !important;
+}
+
+.countdown-layer.top-six-mode .top-six-drama.active {
+  width: 100%;
+  padding-right: 84px !important;
+}
+
+.countdown-layer.top-six-mode .top-six-kicker {
+  margin-bottom: 10px;
+  font-size: clamp(15px, 3.4vw, 23px) !important;
+}
+
+.countdown-layer.top-six-mode .top-six-odds {
+  gap: 6px !important;
+}
+
+.countdown-layer.top-six-mode .top-six-odds-row {
+  min-height: 52px;
+  align-items: center;
+  padding: 9px 13px !important;
+  border-width: 2px;
+  font-size: clamp(16px, 4vw, 27px) !important;
+}
+
+.countdown-layer.top-six-mode .top-six-pct {
+  font-size: 1.12em;
+}
+
+/* The pick note IS the crime-scene tape now, inside the visible card.
+   This avoids it getting lost behind the overlay. */
+.countdown-layer.top-six-mode .top-six-note {
+  display: block !important;
+  position: relative;
+  width: calc(100% + 28px);
+  margin: 16px -14px 0 !important;
+  padding: 11px 18px !important;
+  overflow: hidden;
+  border: 0 !important;
+  color: #0a0803 !important;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      #ffc62b 0 24px,
+      #ffd958 24px 48px
+    ) !important;
+  box-shadow:
+    0 3px 0 #000,
+    0 -3px 0 #000 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: clamp(13px, 3.4vw, 20px) !important;
+  font-weight: 1000 !important;
+  line-height: 1.1 !important;
+  letter-spacing: .025em;
+  text-align: center;
+  text-transform: uppercase;
+  transform: rotate(-1deg);
+  text-shadow: none !important;
+}
+
+/* Keep final-countdown phrase large; its tape note stays visible below. */
+.top-six-drama.final-countdown .top-six-note {
+  margin-top: 22px !important;
+}
+
+@media (max-width: 460px) {
+  .countdown-layer.top-six-mode .countdown-card {
+    width: 97vw !important;
+    padding: 12px 12px 16px !important;
+  }
+
+  .countdown-layer.top-six-mode .top-six-drama.active {
+    padding-right: 60px !important;
+  }
+
+  .countdown-layer.top-six-mode .top-six-odds-row {
+    min-height: 44px;
+    padding: 7px 8px !important;
+    font-size: clamp(13px, 3.8vw, 18px) !important;
+  }
+
+  .countdown-layer.top-six-mode .top-six-note {
+    width: calc(100% + 16px);
+    margin-left: -8px !important;
+    margin-right: -8px !important;
+    padding: 9px 8px !important;
+    font-size: clamp(11px, 3.2vw, 15px) !important;
+  }
+}
+
+
+/* v9.1 — bigger Top-6 live odds takeover */
+.countdown-layer.top-six-mode .countdown-content {
+  width: min(96vw, 860px) !important;
+  max-width: 860px !important;
+}
+
+.countdown-layer.top-six-mode .top-six-drama.active {
+  width: 100%;
+  padding-right: 74px;
+}
+
+.countdown-layer.top-six-mode .top-six-kicker {
+  font-size: clamp(16px, 3vw, 24px);
+  margin-bottom: 12px;
+}
+
+.countdown-layer.top-six-mode .top-six-odds {
+  gap: 7px;
+}
+
+.countdown-layer.top-six-mode .top-six-odds-row {
+  min-height: 48px;
+  padding: 10px 14px;
+  border-width: 2px;
+  font-size: clamp(16px, 3.3vw, 25px);
+  align-items: center;
+}
+
+.countdown-layer.top-six-mode .top-six-pct {
+  font-size: 1.08em;
+}
+
+/* Real caution-tape commentary strip. */
+.countdown-note-tape {
+  display: none;
+  position: fixed;
+  z-index: 12;
+  left: -5vw;
+  right: -5vw;
+  bottom: 7vh;
+  padding: 11px 0;
+  overflow: hidden;
+  transform: rotate(3.5deg);
+  border-top: 3px solid #0a0a0a;
+  border-bottom: 3px solid #0a0a0a;
+  color: #080808;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      #ffc526 0 34px,
+      #f4ad11 34px 48px,
+      #ffc526 48px 82px
+    );
+  box-shadow: 0 5px 0 rgba(0,0,0,.8), 0 -2px 0 rgba(255,232,111,.5);
+  font: 1000 clamp(16px, 3.2vw, 27px)/1 Impact, "Arial Black", sans-serif;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.countdown-note-tape.active {
+  display: block;
+}
+
+.countdown-note-tape-track {
+  width: max-content;
+  min-width: 120vw;
+  padding-left: 2vw;
+  text-shadow: 1px 1px 0 rgba(255,255,255,.25);
+}
+
+@media (max-width: 520px) {
+  .countdown-layer.top-six-mode .countdown-content {
+    width: 96vw !important;
+  }
+
+  .countdown-layer.top-six-mode .top-six-drama.active {
+    padding-right: 58px;
+  }
+
+  .countdown-layer.top-six-mode .top-six-odds-row {
+    min-height: 42px;
+    padding: 8px 9px;
+    font-size: clamp(13px, 3.7vw, 18px);
+  }
+
+  .countdown-note-tape {
+    bottom: 5vh;
+    padding: 9px 0;
+  }
+}
+
+
+/* v9.2 — simplified Top-6 countdown hierarchy */
+.countdown-layer.top-six-mode #countdown-subline,
+.countdown-layer.top-six-mode .countdown-subline {
+  display: none !important;
+}
+
+.countdown-layer.top-six-mode .top-six-note {
+  display: none !important;
+}
+
+/* Commentary lives only on the diagonal caution tape. */
+.countdown-layer.top-six-mode .countdown-note-tape,
+.countdown-layer.top-six-mode .countdown-note-tape.active,
+.countdown-layer.top-six-mode .countdown-note-tape-track {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Generic pre-reveal disaster alert: don't spoil the victim. */
+.drop-alert-card {
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+}
+
+.drop-alert-card .kill-screen-kicker {
+  font-size: clamp(42px, 14vw, 92px);
+  color: #ff3b22;
+}
+
+.drop-alert-icon {
+  color: #ffcf3f;
+  font: 1000 clamp(62px, 20vw, 130px)/.7 Impact, "Arial Black", sans-serif;
+  text-shadow: 5px 5px 0 #000;
+  animation: dropAlertPunch .28s steps(2,end) 3;
+}
+
+@keyframes dropAlertPunch {
+  0% { transform: translateY(-5px) scale(1); }
+  50% { transform: translateY(8px) scale(1.12); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+
+/* v9.3 — no extra commentary tape.
+   Reuse the two original TFC caution banners themselves. */
+.countdown-note-tape {
+  display: none !important;
+}
+
+/* In Top-6 mode, replace the original TFC banner copy with the pick note.
+   Both existing banners stay exactly where they already live. */
+.countdown-layer.top-six-mode::before,
+.countdown-layer.top-six-mode::after {
+  content: attr(data-tape-note) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+}
+
+
+/* v9.5 — at the end of Picks 6–3, show who the hopper selected. */
+.top-six-odds-row {
+  transition:
+    opacity 180ms ease,
+    filter 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.top-six-odds-row.lottery-dimmed {
+  opacity: .3;
+  filter: grayscale(.75) brightness(.65);
+}
+
+.top-six-odds-row.lottery-winner {
+  position: relative;
+  z-index: 5;
+  opacity: 1 !important;
+  color: #120b00 !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.55), transparent 24%),
+    linear-gradient(90deg, #f2ad14, #ffe779 45%, #e4a00c) !important;
+  border-color: #fff1a8 !important;
+  transform: scale(1.035);
+  box-shadow:
+    inset 0 0 0 2px #8d5500,
+    inset 0 2px 0 rgba(255,255,255,.8),
+    0 0 0 3px #000,
+    0 0 28px rgba(255,215,64,.72) !important;
+  filter: none !important;
+  animation: lottoWinnerHit 260ms steps(2,end) 3;
+}
+
+.top-six-odds-row.lottery-winner .top-six-team,
+.top-six-odds-row.lottery-winner .top-six-pct {
+  color: #120b00 !important;
+  text-shadow: 1px 1px 0 rgba(255,255,255,.65) !important;
+}
+
+.top-six-odds-row.lottery-winner::after {
+  content: "SELECTED!";
+  position: absolute;
+  right: 12px;
+  top: -17px;
+  padding: 3px 7px;
+  border: 2px solid #fff1a4;
+  color: #fff3bd;
+  background: #a3150b;
+  font: 1000 11px/1 Impact, "Arial Black", sans-serif;
+  letter-spacing: .07em;
+  text-shadow: 1px 1px 0 #000;
+  box-shadow: 2px 2px 0 #000;
+  transform: rotate(2deg);
+}
+
+@keyframes lottoWinnerHit {
+  0%, 100% { transform: scale(1.035) translateX(0); }
+  50% { transform: scale(1.05) translateX(3px); }
+}
+
+
+/* v9.8 — Control dock: two-row layout only */
+.control-dock {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  grid-template-areas:
+    "status"
+    "actions" !important;
+}
+
+.control-dock .status-copy {
+  grid-area: status !important;
+  width: 100%;
+  min-width: 0;
+}
+
+.control-dock .actions {
+  grid-area: actions !important;
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* v9.10 — let the primary reveal button breathe */
+.control-dock .reveal-button,
+.control-dock #reveal-button,
+.dock-actions .reveal-button,
+.dock-actions #reveal-button {
+  width: min(100%, 440px) !important;
+  max-width: none !important;
+  flex: 1 1 50%;
+}
+
+
+/* v10 Easter eggs */
+
+/* Dead Birds: fifth manual click drops a tiny champs banner. */
+.champ-banner {
+  position: fixed;
+  z-index: 2147483600;
+  top: -90px;
+  left: 50%;
+  width: min(88vw, 420px);
+  padding: 12px 16px;
+  border: 4px ridge #dfb63a;
+  color: #140c00;
+  background:
+    linear-gradient(180deg, #fff0a0, #d99b15 68%, #8f5605);
+  box-shadow:
+    inset 0 0 0 2px #000,
+    5px 6px 0 #000;
+  font: 1000 clamp(17px, 5vw, 28px)/1 Impact, "Arial Black", sans-serif;
+  text-align: center;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+  transform: translateX(-50%) rotate(-2deg);
+  opacity: 0;
+}
+
+.champ-banner.active {
+  animation: champBannerDrop 620ms cubic-bezier(.15,.8,.2,1) forwards;
+}
+
+.champ-banner.leaving {
+  animation: champBannerLeave 520ms ease forwards;
+}
+
+@keyframes champBannerDrop {
+  0% { top: -90px; opacity: 0; transform: translateX(-50%) rotate(-5deg); }
+  75% { top: 24px; opacity: 1; transform: translateX(-50%) rotate(2deg); }
+  100% { top: 16px; opacity: 1; transform: translateX(-50%) rotate(-1deg); }
+}
+
+@keyframes champBannerLeave {
+  to { top: -100px; opacity: 0; transform: translateX(-50%) rotate(4deg); }
+}
+
+/* KFC: one lonely delayed chicken. */
+.lonely-chicken {
+  position: fixed;
+  z-index: 2147483550;
+  top: -70px;
+  left: 53%;
+  font-size: clamp(38px, 10vw, 64px);
+  line-height: 1;
+  pointer-events: none;
+  transform: translateX(-50%) rotate(-10deg);
+  opacity: 0;
+}
+
+.lonely-chicken.active {
+  animation: lonelyChickenFall 2200ms cubic-bezier(.2,.55,.35,1) forwards;
+}
+
+@keyframes lonelyChickenFall {
+  0% { top: -70px; opacity: 0; transform: translateX(-50%) rotate(-10deg); }
+  10% { opacity: 1; }
+  72% { opacity: 1; }
+  100% { top: 108vh; opacity: .95; transform: translateX(80px) rotate(540deg); }
+}
+
+/* Sound-toggle cheat feedback. */
+.sound-action.secret-active {
+  filter: brightness(1.45) saturate(1.4);
+  animation: secretButtonPulse 180ms steps(2,end) 8;
+}
+
+@keyframes secretButtonPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.12) rotate(2deg); }
+}
+
+/* Draft Order finale: brief arcade high-score takeover. */
+.high-scores-layer {
+  position: fixed;
+  z-index: 2147483650;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  padding: 20px;
+  opacity: 0;
+  color: #ffe566;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 4px),
+    radial-gradient(circle at center, #102c1e, #061009 58%, #010201 100%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.high-scores-layer.active {
+  opacity: 1;
+  animation: highScoresBoot 220ms steps(2,end) 2;
+}
+
+.high-scores-layer.leaving {
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.high-scores-title {
+  font: 1000 clamp(52px, 15vw, 110px)/.85 Impact, "Arial Black", sans-serif;
+  letter-spacing: .035em;
+  text-shadow:
+    4px 4px 0 #b3130d,
+    8px 8px 0 #000;
+}
+
+.high-scores-subtitle {
+  color: #fff3ba;
+  font: 1000 clamp(20px, 6vw, 38px)/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .08em;
+}
+
+.high-scores-lines {
+  display: flex;
+  gap: 28px;
+  margin-top: 18px;
+  color: #77e39d;
+  font: 1000 clamp(11px, 3vw, 17px)/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  animation: highScoresBlink 450ms steps(2,end) infinite;
+}
+
+@keyframes highScoresBoot {
+  0% { filter: brightness(.5); transform: scale(.96); }
+  100% { filter: brightness(1.3); transform: scale(1); }
+}
+
+@keyframes highScoresBlink {
+  50% { opacity: .4; }
+}
+
+
+/* Repeatable team milestone banners */
+.milestone-banner {
+  position: fixed;
+  z-index: 2147483650;
+  top: -160px;
+  left: 50%;
+  width: min(92vw, 560px);
+  padding: 18px 18px 15px;
+  border: 5px ridge #c99a29;
+  color: #160d00;
+  background:
+    linear-gradient(180deg, #fff4b0 0%, #e7b537 48%, #9a5c08 100%);
+  box-shadow:
+    inset 0 0 0 2px #251200,
+    inset 0 3px 0 rgba(255,255,255,.68),
+    7px 8px 0 #000,
+    0 0 30px rgba(240,194,58,.35);
+  text-align: center;
+  transform: translateX(-50%) rotate(-1deg);
+  opacity: 0;
+}
+
+.milestone-banner::before,
+.milestone-banner::after {
+  content: "🏆";
+  position: absolute;
+  top: 50%;
+  font-size: 34px;
+  transform: translateY(-50%);
+}
+
+.milestone-banner::before { left: 12px; }
+.milestone-banner::after { right: 12px; }
+
+.milestone-banner.active {
+  animation: milestoneBannerDrop 700ms cubic-bezier(.12,.82,.19,1) forwards;
+}
+
+.milestone-banner.leaving {
+  animation: milestoneBannerLeave 620ms ease forwards;
+}
+
+.milestone-crown {
+  margin-bottom: 2px;
+  color: #5f3600;
+  font-size: 32px;
+  line-height: .8;
+  text-shadow: 1px 1px 0 #fff1a3;
+}
+
+.milestone-text {
+  padding: 0 42px;
+  font: 1000 clamp(19px, 5.5vw, 34px)/.95 Impact, "Arial Black", sans-serif;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 rgba(255,255,255,.45);
+}
+
+.milestone-subtext {
+  margin-top: 6px;
+  padding: 0 35px;
+  font: 1000 clamp(10px, 2.8vw, 15px)/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .06em;
+}
+
+.milestone-banner.royal {
+  border-color: #f4d269;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.8), transparent 26%),
+    linear-gradient(180deg, #fff4b5, #e7b330 50%, #7c4302);
+  box-shadow:
+    inset 0 0 0 2px #2c1600,
+    inset 0 3px 0 rgba(255,255,255,.8),
+    0 0 0 3px #000,
+    0 0 38px rgba(255,207,70,.52),
+    7px 8px 0 #000;
+}
+
+.milestone-banner.beer { transform: translateX(-50%) rotate(1deg); }
+.milestone-banner.water { border-color: #c4d5d8; }
+.milestone-banner.disco { box-shadow: inset 0 0 0 2px #251200, 7px 8px 0 #000, 0 0 34px rgba(255,255,255,.28); }
+
+@keyframes milestoneBannerDrop {
+  0% { top: -160px; opacity: 0; transform: translateX(-50%) rotate(-5deg) scale(.9); }
+  72% { top: 24px; opacity: 1; transform: translateX(-50%) rotate(2deg) scale(1.03); }
+  100% { top: 14px; opacity: 1; transform: translateX(-50%) rotate(-1deg) scale(1); }
+}
+
+@keyframes milestoneBannerLeave {
+  to { top: -180px; opacity: 0; transform: translateX(-50%) rotate(5deg) scale(.94); }
+}
+
+/* Post-lottery unexplained chicken weather */
+.ambient-chicken {
+  position: fixed;
+  z-index: 2147483400;
+  top: -70px;
+  font-size: clamp(32px, 8vw, 54px);
+  line-height: 1;
+  pointer-events: none;
+  opacity: 0;
+  animation: ambientChickenFall 2700ms linear var(--ambient-delay) both;
+}
+
+@keyframes ambientChickenFall {
+  0% {
+    opacity: 0;
+    transform: translate(0,-40px) rotate(0deg);
+  }
+  10% { opacity: 1; }
+  88% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate(var(--ambient-drift), 112vh) rotate(var(--ambient-spin));
+  }
+}
