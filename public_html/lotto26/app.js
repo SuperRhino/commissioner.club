@@ -59,7 +59,7 @@ const lotteryResults = [
   },
   {
     teamName: "Baby Centipedes",
-    emojis: ["🐛", "🐣", "🪲"],
+    emojis: ["🐛", "🐣", "🪲", "👶"],
     reaction: "REJECTED!",
     draftPick: 7,
     lottoPosition: 1,
@@ -206,9 +206,8 @@ function renderLiveOdds() {
     return;
   }
 
-  const nextPick = nextPickToReveal;
   oddsSummary.textContent = `${totalBalls} ${totalBalls === 1 ? "ball" : "balls"} remaining`;
-  oddsDescription.textContent = `Odds to be selected for Pick ${nextPick}, recalculated using only balls still in the hopper.`;
+  oddsDescription.textContent = "Current odds to win the #1 pick, recalculated using only balls still in the hopper.";
 
   oddsList.innerHTML = teams.map((team, index) => `
     <div class="odds-row">
@@ -238,7 +237,8 @@ function closeOdds() {
 }
 
 
-let soundEnabled = true;
+let soundMode = "on"; // on -> fx -> off
+let soundEnabled = true; // compatibility: true whenever FX are enabled
 let countdownEnabled = true;
 
 let deadBirdsClicks = 0;
@@ -252,16 +252,44 @@ const TOP_SIX_MUSIC_URL = "https://jetta.vgmtreasurechest.com/soundtracks/sonic-
 let topSixMusicActivated = false;
 
 const DROP_ALERT_SOUND_URL = "https://nu.vgmtreasurechest.com/soundtracks/super-mario-bros/clusfvmy/09.%20Game%20Over%20Theme.mp3";
-const FINAL_PICK_MUSIC_URL = "https://lambda.vgmtreasurechest.com/soundtracks/tecmo-super-bowl-nes-gamerip/puemvsaz/30_Touchdown%20Fanfare.mp3";
+const PICK_ONE_TRANSITION_MUSIC_URL = "https://lambda.vgmtreasurechest.com/soundtracks/tecmo-super-bowl-nes-gamerip/rosyoajt/29_Touchdown%20%2B%20Cheer.mp3";
+const TOP_PICK_REVEAL_MUSIC_URL = "https://lambda.vgmtreasurechest.com/soundtracks/tecmo-super-bowl-nes-gamerip/puemvsaz/30_Touchdown%20Fanfare.mp3";
+const DRAFT_ORDER_STING_URL = "https://lambda.vgmtreasurechest.com/soundtracks/tecmo-super-bowl-nes-gamerip/fctmenye/17_First%20Down%202.mp3";
 const POST_LOTTERY_MUSIC_URL = "https://jetta.vgmtreasurechest.com/soundtracks/bases-loaded-2-nes/kwdasldg/Bases%20Loaded%202%20Away%20team%20at%20bat.mp3";
 let finalPickMusicActivated = false;
 let postLotteryMusicActivated = false;
+
+const MUSIC_VOLUMES = {
+  nbaJam: 0.24,
+  topSix: 0.12,
+  pickTwo: 0.20,
+  pickOneTransition: 0.20,
+  topPickReveal: 0.22,
+  draftOrder: 0.22,
+  postLottery: 0.18
+};
+let backgroundMusicTargetVolume = MUSIC_VOLUMES.nbaJam;
+let pickOneTransitionMusicActivated = false;
+let topPickRevealMusicActivated = false;
+let draftOrderStingActive = false;
+let pendingPostLotteryMusic = false;
+
 let dropAlertAudio = null;
 
 
 
 const TEAM_PRESS_GOAL = 5;
 const teamPressCounts = new Map();
+
+const easterEggPressCounts = new Map();
+let wetBanditWaterLevel = 0;
+let teamBeerLevel = 0;
+let teamBeerDrainTimer = null;
+let wetBanditDrainTimer = null;
+let slickDiscoActive = false;
+let beltSequenceProgress = 0;
+const BELT_IMAGE_URL = "http://commissioner.club/assets/img/template/tfc-championship-trophy.jpg";
+
 let chickenRainTimer = null;
 
 
@@ -290,45 +318,59 @@ function getBackgroundMusic() {
   backgroundMusic = new Audio(BACKGROUND_MUSIC_URL);
   backgroundMusic.loop = true;
   backgroundMusic.preload = "auto";
-  backgroundMusic.volume = soundEnabled ? 0.24 : 0;
+  backgroundMusic.volume = soundMode === "on" ? backgroundMusicTargetVolume : 0;
 
   return backgroundMusic;
 }
 
 function startBackgroundMusic() {
+  backgroundMusicTargetVolume = MUSIC_VOLUMES.nbaJam;
   const music = getBackgroundMusic();
   backgroundMusicStarted = true;
 
-  if (soundEnabled) {
-    music.volume = 0.24;
+  if (soundMode === "on") {
+    music.volume = backgroundMusicTargetVolume;
     const playPromise = music.play();
     if (playPromise?.catch) playPromise.catch(() => {});
   }
 }
 
-function switchBackgroundTrack(url, { restart = true } = {}) {
+function switchBackgroundTrack(url, { volume = backgroundMusicTargetVolume, loop = true, onEnded = null } = {}) {
+  backgroundMusicTargetVolume = volume;
+
   const oldMusic = backgroundMusic;
   const nextMusic = new Audio(url);
-  nextMusic.loop = true;
+  nextMusic.loop = loop;
   nextMusic.preload = "auto";
-  nextMusic.volume = soundEnabled ? 0.24 : 0;
+  nextMusic.volume = soundMode === "on" ? backgroundMusicTargetVolume : 0;
 
   backgroundMusic = nextMusic;
   backgroundMusicStarted = true;
 
   if (oldMusic) {
     oldMusic.pause();
-    if (restart) oldMusic.currentTime = 0;
+    oldMusic.currentTime = 0;
   }
 
-  if (soundEnabled) {
+  if (!loop && typeof onEnded === "function") {
+    nextMusic.addEventListener("ended", onEnded, { once: true });
+  }
+
+  if (soundMode === "on") {
     const playPromise = nextMusic.play();
     if (playPromise?.catch) playPromise.catch(() => {});
   }
+
+  return nextMusic;
 }
 
-function playDropAlertSound() {
-  if (!soundEnabled) return;
+async function playDropAlertSound() {
+  if (soundMode === "off") return;
+
+  const musicToResume = backgroundMusic;
+  const musicWasPlaying = musicToResume && !musicToResume.paused;
+
+  if (musicToResume) musicToResume.pause();
 
   if (dropAlertAudio) {
     dropAlertAudio.pause();
@@ -336,34 +378,92 @@ function playDropAlertSound() {
   }
 
   dropAlertAudio = new Audio(DROP_ALERT_SOUND_URL);
-  dropAlertAudio.volume = 0.48;
-  const playPromise = dropAlertAudio.play();
-  if (playPromise?.catch) playPromise.catch(() => {});
+  dropAlertAudio.volume = 0.52;
+
+  await new Promise(resolve => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
+
+    dropAlertAudio.addEventListener("ended", finish, { once: true });
+    const playPromise = dropAlertAudio.play();
+    if (playPromise?.catch) playPromise.catch(finish);
+    window.setTimeout(finish, 2600);
+  });
+
+  if (soundMode === "on" && musicWasPlaying && musicToResume === backgroundMusic) {
+    musicToResume.volume = backgroundMusicTargetVolume;
+    const resumePromise = musicToResume.play();
+    if (resumePromise?.catch) resumePromise.catch(() => {});
+  }
 }
 
 function switchToFinalPickMusic() {
   if (finalPickMusicActivated) return;
   finalPickMusicActivated = true;
-  switchBackgroundTrack(FINAL_PICK_MUSIC_URL);
+  switchBackgroundTrack(TOP_PICK_REVEAL_MUSIC_URL, { volume: MUSIC_VOLUMES.pickTwo });
+}
+
+function switchToPickOneTransitionMusic() {
+  if (pickOneTransitionMusicActivated) return;
+  pickOneTransitionMusicActivated = true;
+  switchBackgroundTrack(PICK_ONE_TRANSITION_MUSIC_URL, { volume: MUSIC_VOLUMES.pickOneTransition });
+}
+
+function switchToTopPickRevealMusic() {
+  if (topPickRevealMusicActivated) return;
+  topPickRevealMusicActivated = true;
+  switchBackgroundTrack(TOP_PICK_REVEAL_MUSIC_URL, { volume: MUSIC_VOLUMES.topPickReveal });
+}
+
+function playDraftOrderStingThenPostLottery() {
+  // This function is called ONLY by an explicit Draft Order press.
+  postLotteryMusicActivated = false;
+  draftOrderStingActive = true;
+  pendingPostLotteryMusic = true;
+
+  switchBackgroundTrack(DRAFT_ORDER_STING_URL, {
+    volume: MUSIC_VOLUMES.draftOrder,
+    loop: false,
+    onEnded: () => {
+      draftOrderStingActive = false;
+      if (!pendingPostLotteryMusic) return;
+
+      pendingPostLotteryMusic = false;
+
+      // Let the First Down sting fully clear before the next track enters.
+      window.setTimeout(() => {
+        switchToPostLotteryMusic();
+      }, 1200);
+    }
+  });
 }
 
 function switchToPostLotteryMusic() {
   if (postLotteryMusicActivated) return;
   postLotteryMusicActivated = true;
-  switchBackgroundTrack(POST_LOTTERY_MUSIC_URL);
+  switchBackgroundTrack(POST_LOTTERY_MUSIC_URL, { volume: MUSIC_VOLUMES.postLottery });
 }
 
 function switchToTopSixMusic() {
   if (topSixMusicActivated) return;
   topSixMusicActivated = true;
-  switchBackgroundTrack(TOP_SIX_MUSIC_URL);
+  switchBackgroundTrack(TOP_SIX_MUSIC_URL, { volume: MUSIC_VOLUMES.topSix });
 }
 function syncBackgroundMusicVolume() {
   if (!backgroundMusic) return;
 
-  backgroundMusic.volume = soundEnabled ? 0.24 : 0;
+  if (soundMode !== "on") {
+    backgroundMusic.pause();
+    return;
+  }
 
-  if (soundEnabled && backgroundMusicStarted && backgroundMusic.paused) {
+  backgroundMusic.volume = backgroundMusicTargetVolume;
+
+  if (backgroundMusicStarted && backgroundMusic.paused) {
     const playPromise = backgroundMusic.play();
     if (playPromise?.catch) playPromise.catch(() => {});
   }
@@ -374,7 +474,13 @@ function resetBackgroundMusic() {
     backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
   }
+
+  // Throw away the current track entirely. This prevents a finished
+  // Bases Loaded / Tecmo / Sonic Audio object from being reused when
+  // the lottery starts again.
+  backgroundMusic = null;
   backgroundMusicStarted = false;
+  backgroundMusicTargetVolume = MUSIC_VOLUMES.nbaJam;
 }
 
 function tone(frequency, duration = 0.12, type = "square", volume = 0.045, delay = 0) {
@@ -481,19 +587,70 @@ function toggleCountdown() {
   playButtonSound();
 }
 
-function toggleSound() {
-  soundEnabled = !soundEnabled;
-  soundButton.setAttribute("aria-pressed", String(soundEnabled));
-  soundButton.textContent = soundEnabled ? "🔊" : "🔇";
+function updateSoundControl() {
+  soundEnabled = soundMode !== "off";
 
-  if (soundEnabled) {
-    getAudioContext();
-    playButtonSound();
+  if (soundButton) {
+    if (soundMode === "on") {
+      soundButton.textContent = "🔊";
+      soundButton.setAttribute("aria-label", "Sound on: music and effects");
+      soundButton.title = "Sound: music + FX";
+    } else if (soundMode === "fx") {
+      soundButton.textContent = "🔉";
+      soundButton.setAttribute("aria-label", "Music off, sound effects on");
+      soundButton.title = "Sound: FX only";
+    } else {
+      soundButton.textContent = "🔇";
+      soundButton.setAttribute("aria-label", "All sound off");
+      soundButton.title = "Sound: off";
+    }
   }
-  handleSoundSecret();
-  syncBackgroundMusicVolume();
+
+  // Music only plays in the full ON state.
+  if (backgroundMusic) {
+    if (soundMode === "on") {
+      backgroundMusic.volume = backgroundMusicTargetVolume;
+      if (backgroundMusicStarted && backgroundMusic.paused) {
+        const playPromise = backgroundMusic.play();
+        if (playPromise?.catch) playPromise.catch(() => {});
+      }
+    } else {
+      backgroundMusic.pause();
+    }
+  }
+
+  // A currently-playing Drop Alert is FX, so FX-only keeps it audible.
   if (dropAlertAudio) {
-    dropAlertAudio.volume = soundEnabled ? 0.48 : 0;
+    if (soundMode === "off") {
+      dropAlertAudio.pause();
+    } else {
+      dropAlertAudio.volume = 0.52;
+    }
+  }
+}
+
+function toggleSound() {
+  const now = Date.now();
+  soundToggleTimes = soundToggleTimes.filter(time => now - time < 1600);
+  soundToggleTimes.push(now);
+
+  if (soundMode === "on") soundMode = "fx";
+  else if (soundMode === "fx") soundMode = "off";
+  else soundMode = "on";
+
+  updateSoundControl();
+
+  if (soundToggleTimes.length >= 5 && !soundSecretActive) {
+    soundSecretActive = true;
+    soundToggleTimes = [];
+    playArcadeStartupJingle();
+
+    const normalIcon = soundMode === "on" ? "🔊" : soundMode === "fx" ? "🔉" : "🔇";
+    soundButton.textContent = "👾";
+    window.setTimeout(() => {
+      soundButton.textContent = normalIcon;
+      soundSecretActive = false;
+    }, 1100);
   }
 }
 
@@ -527,8 +684,11 @@ function showReactionMarquee(team) {
     reactionMarquee.setAttribute("aria-hidden", "true");
   }, 8350);
 }
-function burstTeamEmoji(team, sourceElement) {
+function burstTeamEmoji(team, sourceElement, options = {}) {
   if (!team?.emojis?.length || !sourceElement) return;
+
+  const density = Math.max(0.2, Math.min(1, options.density ?? 1));
+  const includeRain = options.includeRain ?? true;
 
   const rect = sourceElement.getBoundingClientRect();
   const originX = rect.left + rect.width / 2;
@@ -555,7 +715,7 @@ function burstTeamEmoji(team, sourceElement) {
 
   // Only this team's emojis + 🎉.
   // Weight team emojis more heavily than the tada symbol.
-  const burstItems = 38;
+  const burstItems = Math.max(10, Math.round(38 * density));
   const burstSymbols = Array.from(
     { length: burstItems - 3 },
     (_, index) => team.emojis[index % team.emojis.length]
@@ -597,7 +757,7 @@ function burstTeamEmoji(team, sourceElement) {
   }
 
   // Follow-up rain uses exactly the same team-specific symbol pool.
-  const rainItems = 22;
+  const rainItems = includeRain ? Math.max(6, Math.round(22 * density)) : 0;
 
   for (let i = 0; i < rainItems; i += 1) {
     const drop = document.createElement("span");
@@ -625,7 +785,11 @@ function wireTeamBurstButtons() {
     button.addEventListener("click", () => {
       if (row.classList.contains("revealed")) {
         burstTeamEmoji(team, button);
+
+        // Independent systems: championship milestone banners and
+        // team-specific Easter eggs do not share counters.
         handleTeamMilestoneTap(team);
+        handleTeamSpecificEasterEgg(team);
         return;
       }
 
@@ -636,6 +800,258 @@ function wireTeamBurstButtons() {
   });
 }
 
+
+
+function incrementEggCount(teamName) {
+  const next = (easterEggPressCounts.get(teamName) || 0) + 1;
+  easterEggPressCounts.set(teamName, next);
+  return next;
+}
+
+function resetEggCount(teamName) {
+  easterEggPressCounts.set(teamName, 0);
+}
+
+function triggerCentipedeCrawl() {
+  const layer = document.createElement("div");
+  layer.className = "centipede-crawl";
+  layer.setAttribute("aria-hidden", "true");
+
+  const leader = document.createElement("span");
+  leader.className = "centipede-leader";
+  leader.textContent = "🐛";
+  layer.appendChild(leader);
+
+  document.body.appendChild(layer);
+  requestAnimationFrame(() => layer.classList.add("active"));
+
+  window.setTimeout(() => layer.remove(), 5200);
+}
+
+function triggerDarfBoxEgg(team) {
+  const layer = document.createElement("div");
+  layer.className = "darf-box-egg";
+  layer.setAttribute("aria-hidden", "true");
+  layer.innerHTML = `
+    <div class="darf-box-caption">WHAT'S IN THE BOX?!</div>
+    <div class="darf-box-object">
+      <span class="darf-box-lid">📦</span>
+    </div>
+  `;
+  document.body.appendChild(layer);
+
+  requestAnimationFrame(() => layer.classList.add("active"));
+
+  window.setTimeout(() => {
+    const box = layer.querySelector(".darf-box-object");
+    if (box) {
+      const rect = box.getBoundingClientRect();
+      const fakeButton = document.createElement("span");
+      fakeButton.style.position = "fixed";
+      fakeButton.style.left = `${rect.left}px`;
+      fakeButton.style.top = `${rect.top}px`;
+      fakeButton.style.width = `${rect.width}px`;
+      fakeButton.style.height = `${rect.height}px`;
+      fakeButton.style.pointerEvents = "none";
+      document.body.appendChild(fakeButton);
+      burstTeamEmoji(team, fakeButton);
+      window.setTimeout(() => fakeButton.remove(), 2500);
+    }
+  }, 1200);
+
+  window.setTimeout(() => layer.remove(), 3200);
+}
+
+function addWetBanditDrop() {
+  const drop = document.createElement("span");
+  drop.className = "wet-bandit-drop";
+  drop.textContent = "💧";
+  drop.setAttribute("aria-hidden", "true");
+  drop.style.left = `${8 + Math.random() * 84}%`;
+  drop.style.setProperty("--drop-delay", `${Math.random() * 140}ms`);
+  document.body.appendChild(drop);
+  window.setTimeout(() => drop.remove(), 1800);
+
+  wetBanditWaterLevel = Math.min(6, wetBanditWaterLevel + 1);
+
+  let water = document.querySelector(".wet-bandit-water");
+  if (!water) {
+    water = document.createElement("div");
+    water.className = "wet-bandit-water";
+    water.setAttribute("aria-hidden", "true");
+    document.body.appendChild(water);
+  }
+
+  water.style.setProperty("--water-height", `${4 + wetBanditWaterLevel * 5}px`);
+  water.classList.add("active");
+
+  if (wetBanditDrainTimer) window.clearTimeout(wetBanditDrainTimer);
+  wetBanditDrainTimer = window.setTimeout(() => {
+    water.classList.add("draining");
+    wetBanditWaterLevel = 0;
+    window.setTimeout(() => water.remove(), 1200);
+    wetBanditDrainTimer = null;
+  }, 2600);
+}
+
+
+function addTeamBeerSplash() {
+  const drop = document.createElement("span");
+  drop.className = "team-beer-drop";
+  drop.textContent = Math.random() < 0.5 ? "🍺" : "💧";
+  drop.setAttribute("aria-hidden", "true");
+  drop.style.left = `${8 + Math.random() * 84}%`;
+  drop.style.setProperty("--beer-drop-delay", `${Math.random() * 140}ms`);
+  document.body.appendChild(drop);
+  window.setTimeout(() => drop.remove(), 1800);
+
+  teamBeerLevel = Math.min(6, teamBeerLevel + 1);
+
+  let beer = document.querySelector(".team-beer-puddle");
+  if (!beer) {
+    beer = document.createElement("div");
+    beer.className = "team-beer-puddle";
+    beer.setAttribute("aria-hidden", "true");
+    document.body.appendChild(beer);
+  }
+
+  beer.style.setProperty("--beer-height", `${4 + teamBeerLevel * 5}px`);
+  beer.classList.add("active");
+
+  if (teamBeerDrainTimer) window.clearTimeout(teamBeerDrainTimer);
+  teamBeerDrainTimer = window.setTimeout(() => {
+    beer.classList.add("draining");
+    teamBeerLevel = 0;
+    window.setTimeout(() => beer.remove(), 1200);
+    teamBeerDrainTimer = null;
+  }, 2600);
+}
+
+function triggerSlickDisco() {
+  if (slickDiscoActive) return;
+  slickDiscoActive = true;
+
+  const layer = document.createElement("div");
+  layer.className = "slick-disco-layer";
+  layer.setAttribute("aria-hidden", "true");
+  layer.innerHTML = `
+    <div class="slick-disco-ball">🪩</div>
+    <div class="slick-disco-rays"></div>
+  `;
+  document.body.appendChild(layer);
+
+  requestAnimationFrame(() => {
+    layer.classList.add("active");
+    document.body.classList.add("slick-disco-mode");
+  });
+
+  window.setTimeout(() => {
+    layer.classList.add("leaving");
+    document.body.classList.remove("slick-disco-mode");
+    slickDiscoActive = false;
+  }, 4000);
+
+  window.setTimeout(() => layer.remove(), 4500);
+}
+
+function maybeTriggerSkyThunder() {
+  // Rare enough to feel accidental.
+  if (Math.random() > 0.18) return;
+
+  const flash = document.createElement("div");
+  flash.className = "sky-thunder-flash";
+  flash.setAttribute("aria-hidden", "true");
+  document.body.appendChild(flash);
+
+  tone(105, .08, "sawtooth", .028);
+  tone(65, .18, "square", .018, .04);
+
+  requestAnimationFrame(() => flash.classList.add("active"));
+  window.setTimeout(() => flash.remove(), 180);
+}
+
+function triggerChampionshipBelt() {
+  const layer = document.createElement("div");
+  layer.className = "championship-belt-egg";
+  layer.setAttribute("aria-hidden", "true");
+  layer.innerHTML = `
+    <div class="championship-belt-title">TFC CHAMPIONSHIP BELT</div>
+    <img src="${BELT_IMAGE_URL}" alt="" class="championship-belt-image">
+  `;
+  document.body.appendChild(layer);
+
+  requestAnimationFrame(() => layer.classList.add("active"));
+  window.setTimeout(() => layer.classList.add("leaving"), 3000);
+  window.setTimeout(() => layer.remove(), 3600);
+}
+
+function handleTeamSpecificEasterEgg(team) {
+  const count = incrementEggCount(team.teamName);
+
+  if (team.teamName === "Baby Centipedes" && count >= 8) {
+    resetEggCount(team.teamName);
+    triggerCentipedeCrawl();
+  }
+
+  if (team.teamName === "Darf Box" && count >= 6) {
+    resetEggCount(team.teamName);
+    triggerDarfBoxEgg(team);
+  }
+
+  if (team.teamName === "Wet Bandits") {
+    addWetBanditDrop();
+    if (count >= 10) resetEggCount(team.teamName);
+  }
+
+  if (team.teamName === "Team BEER") {
+    addTeamBeerSplash();
+    if (count >= 10) resetEggCount(team.teamName);
+  }
+
+  if (team.teamName === "Slick Nicks" && count >= 5) {
+    resetEggCount(team.teamName);
+    triggerSlickDisco();
+  }
+
+  if (team.teamName === "Sky Clouds") {
+    maybeTriggerSkyThunder();
+  }
+
+  // Hidden belt sequence: tap the league's 2X champs ONCE,
+  // in the order they joined the 2X club.
+  // Team BEER -> Sky Clouds -> Slick Nicks -> 55 -> Dead Birds.
+  // Any unrelated team resets the sequence.
+  const beltSteps = [
+    ["Team BEER", 1],
+    ["Sky Clouds", 1],
+    ["Slick Nicks", 1],
+    ["55 WRs 55 QBs 55 TEs 55 RBs", 1],
+    ["dead birds", 1]
+  ];
+
+  const expectedTeam = beltSteps[beltSequenceProgress]?.[0];
+
+  if (team.teamName === expectedTeam) {
+    const sequenceKey = `belt:${beltSequenceProgress}`;
+    const sequenceCount = (easterEggPressCounts.get(sequenceKey) || 0) + 1;
+    easterEggPressCounts.set(sequenceKey, sequenceCount);
+
+    if (sequenceCount >= beltSteps[beltSequenceProgress][1]) {
+      beltSequenceProgress += 1;
+
+      if (beltSequenceProgress >= beltSteps.length) {
+        beltSequenceProgress = 0;
+        beltSteps.forEach((_, index) => easterEggPressCounts.set(`belt:${index}`, 0));
+        triggerChampionshipBelt();
+      }
+    }
+  } else if (
+    !beltSteps.some(([beltTeam]) => beltTeam === team.teamName)
+  ) {
+    beltSequenceProgress = 0;
+    beltSteps.forEach((_, index) => easterEggPressCounts.set(`belt:${index}`, 0));
+  }
+}
 
 function showMilestoneBanner(team) {
   const milestones = {
@@ -931,7 +1347,7 @@ function dramaProfile(pick) {
 
 
 function renderTopSixDrama(pick){
- if(!topSixDrama||pick>6)return;
+ if(!topSixDrama)return;
 
  if (pick === 1) {
    topSixDrama.classList.add("final-countdown");
@@ -951,24 +1367,41 @@ function renderTopSixDrama(pick){
 
  const remaining = lotteryResults
     .filter(team => team.draftPick <= nextPickToReveal)
-    .sort((a, b) => ballsFor(a.lottoPosition) - ballsFor(b.lottoPosition))
-    .reverse();
+    .sort((a, b) => ballsFor(a.lottoPosition) - ballsFor(b.lottoPosition));
  const total = remaining.reduce((sum, team) => sum + ballsFor(team.lottoPosition), 0);
+
+ topSixDrama.dataset.remaining = String(remaining.length);
+ topSixDrama.classList.toggle("full-hopper", remaining.length > 6);
+ topSixDrama.classList.toggle("opening-hopper", pick === 12);
+
  topSixOdds.innerHTML=remaining.map((team,index)=>{
   const pct = total ? ((ballsFor(team.lottoPosition) / total) * 100).toFixed(1) : "0.0";
-  return `<div class="top-six-odds-row ${index===0?"leader":""}" data-pick="${team.draftPick}">
+  const championshipRematch = pick === 12 && (
+    team.teamName === "dead birds" ||
+    team.teamName === "KFC Karaokee"
+  );
+  const rematchClass = championshipRematch ? " championship-rematch" : "";
+  return `<div class="top-six-odds-row ${index===0?"leader":""}${rematchClass}" data-pick="${team.draftPick}">
       <span class="top-six-team">${team.emojis[0]} ${team.teamName}</span>
       <span class="top-six-pct">${pct}%</span>
     </div>`;
  }).join("");
  const note = TOP_SIX_COUNTDOWN_NOTES[pick] || "";
-  topSixNote.textContent = note;
-   countdownLayer.dataset.tapeNote = TOP_SIX_COUNTDOWN_NOTES[pick] || "";
- topSixDrama.classList.add("active");topSixDrama.setAttribute("aria-hidden","false");
+ topSixNote.textContent = note;
+
+ if (note) {
+   countdownLayer.dataset.tapeNote = note;
+ } else {
+   delete countdownLayer.dataset.tapeNote;
+ }
+
+ topSixDrama.classList.add("active");
+ topSixDrama.setAttribute("aria-hidden","false");
 }
 
-async function highlightTopSixWinner(pick) {
-  if (pick < 3 || pick > 6 || !topSixOdds) return;
+async function highlightTopSixWinner(pick, { allowEarly = false } = {}) {
+  const isTopSixHighlight = pick >= 3 && pick <= 6;
+  if ((!isTopSixHighlight && !allowEarly) || !topSixOdds) return;
 
   const winningRow = topSixOdds.querySelector(`[data-pick="${pick}"]`);
   if (!winningRow) return;
@@ -992,13 +1425,9 @@ function hideTopSixDrama(){
   delete countdownLayer.dataset.tapeNote;
 }
 async function runCountdown(pick) {
-  if (pick <= 6) {
-    renderTopSixDrama(pick);
-    countdownLayer.classList.add("top-six-mode");
-  } else {
-    hideTopSixDrama();
-    countdownLayer.classList.remove("top-six-mode");
-  }
+  // Every pick now gets the live-hopper countdown presentation.
+  renderTopSixDrama(pick);
+  countdownLayer.classList.add("top-six-mode");
 
   const profile = dramaProfile(pick);
 
@@ -1024,11 +1453,17 @@ async function runCountdown(pick) {
 
   await sleep(profile.preRevealMs);
 
-  // For Picks 6–3, keep the entire countdown overlay visible while
-  // the selected live-odds row lights up and holds.
-  if (pick >= 3 && pick <= 6) {
+  // Picks 6–3 retain the winner highlight.
+  // For the first two reveals (12 & 11), highlight only when the result
+  // is NOT a Drop Alert. A Drop Alert stays secret until its own sequence.
+  const pendingTeam = lotteryResults.find(team => team.draftPick === pick);
+  const isEarlyReveal = pick === 12 || pick === 11;
+  const shouldHighlightEarly = isEarlyReveal && !isCatastrophicDrop(pendingTeam);
+  const shouldHighlightTopSix = pick >= 3 && pick <= 6;
+
+  if (shouldHighlightEarly || shouldHighlightTopSix) {
     countdownLayer.classList.remove("tick");
-    await highlightTopSixWinner(pick);
+    await highlightTopSixWinner(pick, { allowEarly: shouldHighlightEarly });
   }
 
   countdownLayer.classList.remove("active", "tick");
@@ -1044,10 +1479,9 @@ function isCatastrophicDrop(team) {
 async function showKillScreen(team) {
   if (!team || !countdownEnabled || !isCatastrophicDrop(team)) return;
 
-  // Only play the Game Over cue once we've confirmed this pick
-  // actually qualifies for the DROP ALERT interstitial.
-  playDropAlertSound();
-
+  // Put DROP ALERT on screen first, then start Game Over immediately.
+  // Do NOT await the audio before rendering: the visual and music should
+  // run together as one interstitial.
   const layer = document.createElement("div");
   layer.className = "kill-screen";
   layer.innerHTML = `
@@ -1059,9 +1493,18 @@ async function showKillScreen(team) {
     </div>
   `;
   document.body.appendChild(layer);
+
   requestAnimationFrame(() => layer.classList.add("active"));
   playButtonSound();
-  await sleep(1450);
+
+  // playDropAlertSound pauses the normal soundtrack while Game Over plays.
+  // Keep the alert visible for that entire cue.
+  const gameOverPromise = playDropAlertSound();
+  await Promise.all([
+    gameOverPromise,
+    sleep(1450)
+  ]);
+
   layer.classList.add("leaving");
   await sleep(300);
   layer.remove();
@@ -1070,16 +1513,22 @@ async function showKillScreen(team) {
 function autoCelebrateReveal(team, burstButton, pick) {
   if (!team || !burstButton) return;
 
-  const bursts = pick === 1 ? 10 : 1;
-  for (let i = 0; i < bursts; i += 1) {
-    window.setTimeout(() => {
-      burstTeamEmoji(team, burstButton);
-    }, 360 + (i * 260));
+  if (pick !== 1) {
+    window.setTimeout(() => burstTeamEmoji(team, burstButton), 420);
+    return;
   }
 
-  // One unexplained chicken after KFC's full #1 barrage.
-  if (pick === 1 && team.teamName === "KFC Karaokee") {
-    window.setTimeout(dropLonelyChicken, 5200);
+  for (let i = 0; i < 10; i += 1) {
+    window.setTimeout(() => {
+      burstTeamEmoji(team, burstButton, {
+        density: i % 2 === 0 ? 0.52 : 0.34,
+        includeRain: i % 4 === 0
+      });
+    }, 500 + (i * 560));
+  }
+
+  if (team.teamName === "KFC Karaokee") {
+    window.setTimeout(dropLonelyChicken, 7600);
   }
 }
 
@@ -1119,6 +1568,10 @@ function revealPick(pick) {
     burstButton.title = `${team.emojis.join(" ")} Tap for trouble`;
   }
 
+  if (pick === 1) {
+    switchToTopPickRevealMusic();
+  }
+
   showReactionMarquee(team);
   playRevealSound(pick);
 
@@ -1136,7 +1589,8 @@ function updateInterfaceAfterReveal(pick) {
 
   if (pick === 1) {
     nextPickToReveal = 0;
-    switchToPostLotteryMusic();
+    // Keep Touchdown Fanfare running after #1. Bases Loaded must not
+    // start until the user explicitly presses SHOW DRAFT ORDER.
     scheduleAmbientChicken();
     buttonLabel.textContent = "SHOW DRAFT ORDER";
     revealButton.querySelector(".button-icon").textContent = "↕";
@@ -1170,6 +1624,7 @@ async function showDraftOrder() {
   isAnimating = true;
   revealButton.disabled = true;
 
+  playDraftOrderStingThenPostLottery();
   await showHighScoresTransition();
 
   const rows = [...board.querySelectorAll(".pick-row")];
@@ -1216,6 +1671,11 @@ function resetLottery() {
 
   resetBackgroundMusic();
   topSixMusicActivated = false;
+  pickOneTransitionMusicActivated = false;
+  topPickRevealMusicActivated = false;
+  draftOrderStingActive = false;
+  pendingPostLotteryMusic = false;
+  backgroundMusicTargetVolume = MUSIC_VOLUMES.nbaJam;
   finalPickMusicActivated = false;
   postLotteryMusicActivated = false;
   if (dropAlertAudio) {
@@ -1226,6 +1686,27 @@ function resetLottery() {
 
   deadBirdsClicks = 0;
   teamPressCounts.clear();
+  easterEggPressCounts.clear();
+  beltSequenceProgress = 0;
+  wetBanditWaterLevel = 0;
+  teamBeerLevel = 0;
+  slickDiscoActive = false;
+
+  if (wetBanditDrainTimer) {
+    window.clearTimeout(wetBanditDrainTimer);
+    wetBanditDrainTimer = null;
+  }
+
+  if (teamBeerDrainTimer) {
+    window.clearTimeout(teamBeerDrainTimer);
+    teamBeerDrainTimer = null;
+  }
+
+  document.querySelectorAll(
+    ".centipede-crawl, .darf-box-egg, .wet-bandit-drop, .wet-bandit-water, .team-beer-drop, .team-beer-puddle, .slick-disco-layer, .sky-thunder-flash, .championship-belt-egg"
+  ).forEach(node => node.remove());
+
+  document.body.classList.remove("slick-disco-mode");
   stopAmbientChicken();
 
   isAnimating = true;
@@ -1268,6 +1749,10 @@ async function handleReveal() {
 
   if (pick === 2 && !finalPickMusicActivated) {
     switchToFinalPickMusic();
+  }
+
+  if (pick === 1 && !pickOneTransitionMusicActivated) {
+    switchToPickOneTransitionMusic();
   }
 
   statusKicker.textContent = "IN THE HOPPER";

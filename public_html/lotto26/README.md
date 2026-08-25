@@ -283,3 +283,106 @@ The current version loads the MP3 from its source URL at runtime rather than bun
 - Lottery complete: Bases Loaded 2 — Away Team at Bat
 
 All cues obey the app's sound toggle.
+
+## v11 audio / odds behavior
+
+- Sound toggle pauses/resumes the active background music as well as controlling SFX.
+- Emerald Hill is intentionally quieter than NBA Jam.
+- Drop Alert pauses the current music while the Mario Game Over cue plays, then resumes it.
+- Pick 2 uses Tecmo Super Bowl — Touchdown Fanfare.
+- Pick 1 transition/countdown uses Tecmo Super Bowl — Touchdown + Cheer.
+- As soon as Pick 1 is revealed, Touchdown Fanfare takes over.
+- Pressing Draft Order plays First Down 2 once; when it ends, Bases Loaded 2 begins.
+- Live Odds are odds to win the #1 pick.
+- The standalone hopper keeps its current order; Top-6 transition odds are shown in reverse order.
+
+
+### v11.4 finale audio order
+
+1. Pick #1 reveal starts **Touchdown Fanfare** and it remains the active soundtrack after the reveal.
+2. Nothing switches to Bases Loaded merely because the lottery is complete.
+3. Only when **Draft Order** is pressed does **First Down 2** start.
+4. When First Down 2 finishes, **Bases Loaded 2 — Away Team at Bat** begins.
+
+
+## v11.6
+
+- Sound control is now three-state: **🔊 Music + FX → 🔉 FX only → 🔇 Off**.
+- First Down 2 is allowed to finish naturally, then Bases Loaded waits another 1.2 seconds before starting.
+- Pick 12's transition emphasizes the Dead Birds/KFC 2025 championship rematch while compressing the other teams for mobile.
+- Picks 12 and 11 highlight the selected team on the odds screen only for normal reveals. Drop Alert results remain hidden until the Drop Alert sequence.
+
+
+## v11.7
+
+- Reset now discards the active background-music player entirely and resets every soundtrack phase. A new lottery always starts with NBA Jam.
+- Early Live Odds rows are denser with larger team names.
+- Manual team-button presses remain immediate; only KFC's automatic ten-beat finale is throttled.
+- 2X/3X championship banners have additional mobile sizing safeguards.
+
+- v11.8: Pick 12's championship-game label now sits inline after Dead Birds/KFC instead of overlapping the team names.
+
+
+## v12 team Easter eggs
+
+These are independent of the 2X/3X championship milestone banners.
+
+- Baby Centipedes: 8 manual taps triggers a crawling bug/baby procession across the bottom.
+- Darf Box: 6 manual taps drops a box from the sky, displays “WHAT'S IN THE BOX?!”, then releases a team emoji burst.
+- Wet Bandits: each manual tap creates a falling water drop and gradually builds a shallow water line along the bottom; it drains after inactivity.
+- Slick Nicks: 5 manual taps triggers a four-second disco mode with a descending disco ball.
+- Sky Clouds: each manual tap has a small random chance of a lightning flash + tiny thunder synth.
+- Championship belt: hidden interaction sequence using championship teams triggers the TFC belt image from commissioner.club.
+- Baby Centipedes now includes 👶 in its emoji set.
+
+- v12.1: DROP ALERT now appears immediately and remains visible while the Mario Game Over cue plays, instead of waiting for the audio to finish before showing the alert.
+
+
+## v12.2
+
+- Team BEER now has a beer-colored flood Easter egg parallel to Wet Bandits: repeated taps drop 🍺/droplets and build a yellow beer puddle along the bottom before it drains.
+- Darf Box's giant falling box gets stronger shadow/glow treatment.
+- Slick Nicks' disco ball now drops to the center of the screen and has a larger glow/shadow so it reads as the focal object.
+
+
+## v12.3 — Secret TFC Belt sequence
+
+The belt code now follows the order teams entered the 2X Champ Club. Tap each exactly once, in order:
+
+**Team BEER → Sky Clouds → Slick Nicks → 55 WRs 55 QBs 55 TEs 55 RBs → Dead Birds**
+
+Completing the sequence summons the TFC Championship Belt.
+
+
+## Deploying to commissioner.club
+
+This project is deployed as static files to:
+
+`~/Code/superrhino/commissioner.club/public_html/lotto26/`
+
+The `package.json` includes a small deploy script that copies only the files needed by the lottery page. It does **not** recursively copy this repository, so `.git` and other project files will not be copied into `commissioner.club`.
+
+From `~/Code/superrhino/lotto-reveal-26`, run:
+
+```bash
+npm run deploy
+```
+
+That command creates the destination directory if necessary and copies/replaces:
+
+- `README.md`
+- `app.js`
+- `index.html`
+- `styles.css`
+
+After deploying, review and commit the changes from the `commissioner.club` repository:
+
+```bash
+cd ../commissioner.club
+git diff
+git add public_html/lotto26
+git commit -m "Update 2026 draft lottery"
+git push
+```
+
+The deployed lottery is intended to live at `commissioner.club/lotto26/`.

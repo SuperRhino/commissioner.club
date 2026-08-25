@@ -2482,3 +2482,1078 @@ main {
     transform: translate(var(--ambient-drift), 112vh) rotate(var(--ambient-spin));
   }
 }
+
+.pick-row.awaiting::before {
+  content: "NEXT PICK";
+  position: absolute;
+  z-index: 35;
+  right: 8px;
+  top: 50%;
+  padding: 3px 6px;
+  transform: translateY(-50%) rotate(1deg);
+  border: 1px solid rgba(255,245,174,.9);
+  color: #fff1a0;
+  background: rgba(58,34,3,.88);
+  font: 1000 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .08em;
+  text-shadow: 1px 1px 0 #000;
+  box-shadow: 2px 2px 0 #000;
+  pointer-events: none;
+}
+
+
+/* v11.1 — 2X Champ Club: royal red scroll/banner reveal */
+.milestone-banner.disco,
+.milestone-banner.storm,
+.milestone-banner.burger {
+  overflow: hidden;
+  width: min(92vw, 560px);
+  padding: 21px 26px 18px;
+  border: 0;
+  border-radius: 7px;
+  color: #ffe7a0;
+  background:
+    linear-gradient(90deg,
+      rgba(67,0,0,.8) 0%,
+      transparent 9%,
+      transparent 91%,
+      rgba(67,0,0,.8) 100%),
+    linear-gradient(180deg, #a20d14 0%, #7c0710 52%, #510309 100%);
+  box-shadow:
+    inset 0 0 0 3px #d6a52c,
+    inset 0 0 0 7px #7e4b08,
+    inset 0 0 0 9px #f2cf68,
+    inset 0 0 22px rgba(0,0,0,.52),
+    7px 8px 0 #000,
+    0 0 26px rgba(211,159,38,.34);
+  transform-origin: 50% 0%;
+}
+
+/* Frilly / ornamental gold edge */
+.milestone-banner.disco::before,
+.milestone-banner.storm::before,
+.milestone-banner.burger::before,
+.milestone-banner.disco::after,
+.milestone-banner.storm::after,
+.milestone-banner.burger::after {
+  content: "✦ ❧ ✦ ❧ ✦";
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  width: auto;
+  color: #f2cc62;
+  font-size: 15px;
+  line-height: 1;
+  letter-spacing: 4px;
+  white-space: nowrap;
+  text-shadow: 1px 1px 0 #5b3300;
+  transform: translateX(-50%);
+}
+
+.milestone-banner.disco::before,
+.milestone-banner.storm::before,
+.milestone-banner.burger::before { top: 5px; }
+
+.milestone-banner.disco::after,
+.milestone-banner.storm::after,
+.milestone-banner.burger::after {
+  top: auto;
+  right: auto;
+  bottom: 5px;
+  transform: translateX(-50%) rotate(180deg);
+}
+
+.milestone-banner.disco .milestone-crown,
+.milestone-banner.storm .milestone-crown,
+.milestone-banner.burger .milestone-crown {
+  color: #f3cf69;
+  text-shadow: 2px 2px 0 #4b2200;
+}
+
+.milestone-banner.disco .milestone-text,
+.milestone-banner.storm .milestone-text,
+.milestone-banner.burger .milestone-text {
+  color: #fff0b6;
+  text-shadow:
+    2px 2px 0 #4e0509,
+    0 0 8px rgba(255,215,100,.18);
+}
+
+/* Override the normal drop: banner descends tightly rolled, then unfurls. */
+.milestone-banner.disco.active,
+.milestone-banner.storm.active,
+.milestone-banner.burger.active {
+  animation: champScrollUnroll 1050ms cubic-bezier(.18,.78,.22,1) forwards;
+}
+
+.milestone-banner.disco.leaving,
+.milestone-banner.storm.leaving,
+.milestone-banner.burger.leaving {
+  animation: champScrollRollUp 700ms cubic-bezier(.55,0,.8,.25) forwards;
+}
+
+@keyframes champScrollUnroll {
+  0% {
+    top: 10px;
+    opacity: 0;
+    clip-path: inset(48% 0 48% 0 round 7px);
+    transform: translateX(-50%) scaleY(.06) rotate(-1deg);
+  }
+  20% {
+    opacity: 1;
+    clip-path: inset(42% 0 42% 0 round 7px);
+    transform: translateX(-50%) scaleY(.16) rotate(.5deg);
+  }
+  68% {
+    top: 14px;
+    clip-path: inset(5% 0 5% 0 round 7px);
+    transform: translateX(-50%) scaleY(1.04) rotate(-.5deg);
+  }
+  84% {
+    clip-path: inset(0 0 0 0 round 7px);
+    transform: translateX(-50%) scaleY(.97) rotate(.25deg);
+  }
+  100% {
+    top: 14px;
+    opacity: 1;
+    clip-path: inset(0 0 0 0 round 7px);
+    transform: translateX(-50%) scaleY(1) rotate(0deg);
+  }
+}
+
+@keyframes champScrollRollUp {
+  0% {
+    top: 14px;
+    opacity: 1;
+    clip-path: inset(0 0 0 0 round 7px);
+    transform: translateX(-50%) scaleY(1);
+  }
+  70% {
+    top: 10px;
+    opacity: 1;
+    clip-path: inset(43% 0 43% 0 round 7px);
+    transform: translateX(-50%) scaleY(.15);
+  }
+  100% {
+    top: -30px;
+    opacity: 0;
+    clip-path: inset(49% 0 49% 0 round 7px);
+    transform: translateX(-50%) scaleY(.03);
+  }
+}
+
+
+/* v11.2 — use the Live Lottery Odds countdown from Pick 12 onward.
+   Early rounds compact the table so the whole hopper still fits on mobile. */
+.countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-kicker {
+  margin-bottom: 6px;
+  font-size: clamp(12px, 2.6vw, 17px);
+}
+
+.countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-odds {
+  gap: 2px;
+}
+
+.countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-odds-row {
+  min-height: 31px;
+  padding: 4px 7px;
+  border-width: 1px;
+  font-size: clamp(10px, 2.5vw, 13px);
+}
+
+.countdown-layer.top-six-mode .top-six-drama.full-hopper {
+  padding-right: 68px;
+}
+
+/* Pick 12–7 have no special commentary note yet, so their original
+   yellow caution banners simply keep saying TFC. */
+.countdown-layer.top-six-mode:not([data-tape-note])::before,
+.countdown-layer.top-six-mode:not([data-tape-note])::after {
+  content: "TFC • TFC • TFC • TFC • TFC • TFC" !important;
+}
+
+/* Slightly smaller countdown bug while the table is at its densest. */
+.countdown-layer.top-six-mode:has(.top-six-drama.full-hopper) .countdown-number {
+  width: 52px;
+  height: 52px;
+  font-size: 34px !important;
+}
+
+@media (max-width: 460px) {
+  .countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-kicker {
+    font-size: 10px;
+  }
+
+  .countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-odds {
+    gap: 1px;
+  }
+
+  .countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-odds-row {
+    min-height: 26px;
+    padding: 3px 5px;
+    font-size: 9px;
+  }
+
+  .countdown-layer.top-six-mode .top-six-drama.full-hopper {
+    padding-right: 50px;
+  }
+
+  .countdown-layer.top-six-mode:has(.top-six-drama.full-hopper) .countdown-number {
+    width: 42px;
+    height: 42px;
+    font-size: 27px !important;
+  }
+}
+
+
+/* v11.3 — Team BEER is the lone 3X champ. Give the king his own banner. */
+.milestone-banner.beer {
+  overflow: visible;
+  width: min(94vw, 600px);
+  padding: 27px 28px 23px;
+  border: 0;
+  border-radius: 5px;
+  color: #fff0ae;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,224,107,.24), transparent 42%),
+    linear-gradient(90deg, rgba(48,0,0,.9), transparent 11%, transparent 89%, rgba(48,0,0,.9)),
+    linear-gradient(180deg, #8f0710 0%, #65030a 55%, #380104 100%);
+  box-shadow:
+    inset 0 0 0 3px #f4d36e,
+    inset 0 0 0 7px #8d570c,
+    inset 0 0 0 10px #eabf4e,
+    inset 0 0 30px rgba(0,0,0,.7),
+    8px 9px 0 #000,
+    0 0 36px rgba(245,199,73,.48);
+  transform-origin: 50% 0%;
+}
+
+/* Triple-tier ornamental gold frame */
+.milestone-banner.beer::before {
+  content: "♛  ✦  ❧  👑  ❧  ✦  ♛";
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: -19px;
+  padding: 6px 13px 5px;
+  border: 3px double #f6d66f;
+  border-radius: 50%;
+  color: #ffe28a;
+  background: #590208;
+  font-size: 19px;
+  line-height: 1;
+  letter-spacing: 3px;
+  white-space: nowrap;
+  text-shadow:
+    1px 2px 0 #4c2600,
+    0 0 8px rgba(255,225,118,.55);
+  box-shadow:
+    0 3px 0 #000,
+    0 0 16px rgba(245,197,62,.4);
+  transform: translateX(-50%);
+}
+
+.milestone-banner.beer::after {
+  content: "★ ★ ★";
+  position: absolute;
+  left: 50%;
+  bottom: -13px;
+  padding: 3px 13px;
+  border: 2px solid #d9a72e;
+  color: #ffe384;
+  background: #4c0207;
+  font: 1000 15px/1 Georgia, serif;
+  letter-spacing: 8px;
+  text-shadow: 1px 1px 0 #492600;
+  transform: translateX(-50%);
+}
+
+.milestone-banner.beer .milestone-crown {
+  font-size: 32px;
+  color: #ffe077;
+  text-shadow:
+    2px 3px 0 #4c2100,
+    0 0 10px rgba(255,221,100,.7);
+  animation: beerCrownFloat 900ms ease-in-out infinite alternate;
+}
+
+.milestone-banner.beer .milestone-text {
+  color: #fff2b6;
+  font-size: clamp(21px, 5.4vw, 34px);
+  letter-spacing: .025em;
+  text-shadow:
+    2px 3px 0 #3b0004,
+    -1px -1px 0 #7e4a00,
+    0 0 12px rgba(255,217,91,.3);
+}
+
+/* The 3X banner gets a grander two-stage unfurl + tiny victory bounce. */
+.milestone-banner.beer.active {
+  animation: beerRoyalUnfurl 1350ms cubic-bezier(.17,.84,.2,1) forwards;
+}
+
+.milestone-banner.beer.leaving {
+  animation: beerRoyalRollUp 780ms cubic-bezier(.55,0,.8,.25) forwards;
+}
+
+@keyframes beerRoyalUnfurl {
+  0% {
+    top: 4px;
+    opacity: 0;
+    clip-path: inset(49% 0 49% 0 round 5px);
+    transform: translateX(-50%) scaleY(.025) rotate(-2deg);
+  }
+  16% {
+    opacity: 1;
+    clip-path: inset(43% 0 43% 0 round 5px);
+    transform: translateX(-50%) scaleY(.13) rotate(1deg);
+  }
+  55% {
+    top: 17px;
+    clip-path: inset(9% 0 9% 0 round 5px);
+    transform: translateX(-50%) scaleY(.94) rotate(-.7deg);
+  }
+  74% {
+    clip-path: inset(0 0 0 0 round 5px);
+    transform: translateX(-50%) scaleY(1.08) rotate(.45deg);
+  }
+  88% {
+    transform: translateX(-50%) scaleY(.97) rotate(-.2deg);
+  }
+  100% {
+    top: 17px;
+    opacity: 1;
+    clip-path: inset(0 0 0 0 round 5px);
+    transform: translateX(-50%) scaleY(1) rotate(0);
+  }
+}
+
+@keyframes beerRoyalRollUp {
+  0% {
+    top: 17px;
+    opacity: 1;
+    clip-path: inset(0 0 0 0 round 5px);
+    transform: translateX(-50%) scaleY(1);
+  }
+  72% {
+    opacity: 1;
+    clip-path: inset(44% 0 44% 0 round 5px);
+    transform: translateX(-50%) scaleY(.12);
+  }
+  100% {
+    top: -38px;
+    opacity: 0;
+    clip-path: inset(49% 0 49% 0 round 5px);
+    transform: translateX(-50%) scaleY(.02);
+  }
+}
+
+@keyframes beerCrownFloat {
+  from { transform: translateY(0) rotate(-2deg) scale(1); }
+  to   { transform: translateY(-4px) rotate(2deg) scale(1.08); }
+}
+
+
+/* v11.6 — Opening hopper: feature the 2025 championship rematch,
+   compress everyone else so Pick 12 breathes on a phone. */
+.top-six-drama.opening-hopper .top-six-odds {
+  gap: 2px;
+}
+
+.top-six-drama.opening-hopper .top-six-odds-row:not(.championship-rematch) {
+  min-height: 22px !important;
+  padding: 2px 6px !important;
+  font-size: 8px !important;
+  opacity: .72;
+  border-width: 1px !important;
+}
+
+.top-six-drama.opening-hopper .top-six-odds-row:not(.championship-rematch) .top-six-team {
+  max-width: calc(100% - 48px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.top-six-drama.opening-hopper .top-six-odds-row.championship-rematch {
+  min-height: 38px !important;
+  padding: 6px 8px !important;
+  border: 2px solid rgba(235, 221, 171, .72) !important;
+  font-size: 11px !important;
+  opacity: 1;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.08),
+    2px 2px 0 rgba(0,0,0,.65);
+}
+
+.top-six-drama.opening-hopper .top-six-odds-row.championship-rematch .top-six-team {
+  font-weight: 1000;
+}
+
+.top-six-drama.opening-hopper .top-six-odds-row.championship-rematch::before {
+  content: "2025 TITLE GAME";
+  margin-right: 5px;
+  color: #f0d883;
+  font: 900 7px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+@media (max-width: 390px) {
+  .top-six-drama.opening-hopper .top-six-odds-row:not(.championship-rematch) {
+    min-height: 19px !important;
+    padding: 1px 4px !important;
+    font-size: 7.5px !important;
+  }
+
+  .top-six-drama.opening-hopper .top-six-odds-row.championship-rematch {
+    min-height: 34px !important;
+    padding: 5px 6px !important;
+    font-size: 10px !important;
+  }
+
+  .top-six-drama.opening-hopper .top-six-odds-row.championship-rematch::before {
+    content: "TITLE GAME";
+    font-size: 6px;
+  }
+}
+
+
+/* v11.7 — early Live Odds: less empty space, larger names */
+.countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-odds-row {
+  min-height: 28px !important;
+  padding: 3px 8px !important;
+  font-size: clamp(11px, 2.55vw, 15px) !important;
+  line-height: 1 !important;
+  align-items: center;
+}
+
+.countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-team,
+.countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-pct {
+  line-height: 1 !important;
+}
+
+.countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-pct {
+  font-size: 1.05em !important;
+}
+
+/* Pick 12 championship rematch: featured, but compact. */
+.top-six-drama.opening-hopper .top-six-odds-row:not(.championship-rematch) {
+  min-height: 25px !important;
+  padding: 3px 7px !important;
+  font-size: clamp(10px, 2.35vw, 13px) !important;
+  opacity: .8;
+}
+
+.top-six-drama.opening-hopper .top-six-odds-row.championship-rematch {
+  position: relative;
+  min-height: 35px !important;
+  padding: 5px 8px 5px 92px !important;
+  font-size: clamp(14px, 3.2vw, 18px) !important;
+}
+
+.top-six-drama.opening-hopper .top-six-odds-row.championship-rematch::before {
+  content: "2025 TITLE GAME";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  margin: 0;
+  transform: translateY(-50%);
+  color: #f0d883;
+  font: 900 7px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .03em;
+  white-space: nowrap;
+}
+
+.top-six-drama.opening-hopper .top-six-odds-row.championship-rematch .top-six-team {
+  font-size: 1em !important;
+  font-weight: 1000;
+}
+
+@media (max-width: 460px) {
+  .countdown-layer.top-six-mode .top-six-drama.full-hopper .top-six-odds-row {
+    min-height: 24px !important;
+    padding: 2px 5px !important;
+    font-size: 10px !important;
+  }
+
+  .top-six-drama.opening-hopper .top-six-odds-row:not(.championship-rematch) {
+    min-height: 22px !important;
+    padding: 2px 5px !important;
+    font-size: 9.5px !important;
+  }
+
+  .top-six-drama.opening-hopper .top-six-odds-row.championship-rematch {
+    min-height: 32px !important;
+    padding: 4px 6px 4px 70px !important;
+    font-size: 13px !important;
+  }
+
+  .top-six-drama.opening-hopper .top-six-odds-row.championship-rematch::before {
+    left: 6px;
+    font-size: 5.8px;
+    content: "TITLE GAME";
+  }
+}
+
+/* v11.7 — championship banners contained on phones */
+.milestone-banner,
+.milestone-banner.beer,
+.milestone-banner.disco,
+.milestone-banner.storm,
+.milestone-banner.burger {
+  box-sizing: border-box;
+  max-width: calc(100vw - 20px);
+}
+
+@media (max-width: 520px) {
+  .milestone-banner.disco,
+  .milestone-banner.storm,
+  .milestone-banner.burger {
+    width: calc(100vw - 20px);
+    max-width: 410px;
+    padding: 19px 12px 16px;
+    border-radius: 5px;
+    box-shadow:
+      inset 0 0 0 2px #d6a52c,
+      inset 0 0 0 5px #7e4b08,
+      inset 0 0 0 7px #f2cf68,
+      inset 0 0 16px rgba(0,0,0,.48),
+      4px 5px 0 #000,
+      0 0 18px rgba(211,159,38,.26);
+  }
+
+  .milestone-banner.disco::before,
+  .milestone-banner.storm::before,
+  .milestone-banner.burger::before,
+  .milestone-banner.disco::after,
+  .milestone-banner.storm::after,
+  .milestone-banner.burger::after {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .milestone-banner.disco .milestone-crown,
+  .milestone-banner.storm .milestone-crown,
+  .milestone-banner.burger .milestone-crown {
+    margin-bottom: 3px;
+    font-size: 21px;
+  }
+
+  .milestone-banner.disco .milestone-text,
+  .milestone-banner.storm .milestone-text,
+  .milestone-banner.burger .milestone-text {
+    padding: 0 8px;
+    font-size: clamp(17px, 5.4vw, 23px);
+    line-height: .98;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .milestone-banner.beer {
+    width: calc(100vw - 20px);
+    max-width: 420px;
+    padding: 24px 12px 20px;
+    box-shadow:
+      inset 0 0 0 2px #f4d36e,
+      inset 0 0 0 5px #8d570c,
+      inset 0 0 0 7px #eabf4e,
+      inset 0 0 18px rgba(0,0,0,.62),
+      4px 5px 0 #000,
+      0 0 22px rgba(245,199,73,.34);
+  }
+
+  .milestone-banner.beer::before {
+    content: "♛  👑  ♛";
+    top: -12px;
+    padding: 4px 9px;
+    border-width: 2px;
+    font-size: 15px;
+    letter-spacing: 2px;
+  }
+
+  .milestone-banner.beer::after {
+    content: "★  ★  ★";
+    bottom: -8px;
+    padding: 2px 8px;
+    font-size: 11px;
+    letter-spacing: 4px;
+  }
+
+  .milestone-banner.beer .milestone-crown {
+    margin-bottom: 3px;
+    font-size: 24px;
+  }
+
+  .milestone-banner.beer .milestone-text {
+    padding: 0 10px;
+    font-size: clamp(18px, 5.7vw, 25px);
+    line-height: .96;
+    white-space: normal;
+  }
+}
+
+
+/* v11.8 — Pick 12 championship-game label belongs AFTER the team name. */
+.top-six-drama.opening-hopper .top-six-odds-row.championship-rematch {
+  padding-left: 8px !important;
+}
+
+.top-six-drama.opening-hopper .top-six-odds-row.championship-rematch::before {
+  display: none !important;
+  content: none !important;
+}
+
+.top-six-drama.opening-hopper .top-six-odds-row.championship-rematch .top-six-team::after {
+  content: "2025 TITLE GAME";
+  display: inline-block;
+  margin-left: 10px;
+  padding: 3px 6px 2px;
+  border: 1px solid rgba(240, 216, 131, .55);
+  color: #f0d883;
+  background: rgba(0, 0, 0, .28);
+  font: 900 7px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .04em;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+@media (max-width: 460px) {
+  .top-six-drama.opening-hopper .top-six-odds-row.championship-rematch {
+    padding-left: 6px !important;
+  }
+
+  .top-six-drama.opening-hopper .top-six-odds-row.championship-rematch .top-six-team::after {
+    content: "TITLE GAME";
+    margin-left: 6px;
+    padding: 2px 4px 1px;
+    font-size: 5.5px;
+  }
+}
+
+
+/* v11.9 — Team BEER 3X banner cleanup.
+   Generic championship pseudo-elements were painting an opaque red slab
+   over the actual banner copy. BEER owns its decorations outright. */
+.milestone-banner.beer {
+  isolation: isolate;
+  overflow: visible;
+}
+
+.milestone-banner.beer::before {
+  content: "♛  ✦  👑  ✦  ♛" !important;
+  z-index: 4 !important;
+  top: -18px !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  padding: 5px 12px !important;
+  border: 2px solid #f6d66f !important;
+  border-radius: 999px !important;
+  background: #590208 !important;
+  clip-path: none !important;
+  opacity: 1 !important;
+}
+
+.milestone-banner.beer::after {
+  content: "★  ★  ★" !important;
+  z-index: 4 !important;
+  left: 50% !important;
+  bottom: -10px !important;
+  top: auto !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 2px 10px !important;
+  border: 2px solid #d9a72e !important;
+  background: #4c0207 !important;
+  clip-path: none !important;
+  transform: translateX(-50%) !important;
+  opacity: 1 !important;
+}
+
+.milestone-banner.beer > * {
+  position: relative;
+  z-index: 5;
+}
+
+@media (max-width:520px) {
+  .milestone-banner.beer::before {
+    content: "♛ 👑 ♛" !important;
+    top: -12px !important;
+    padding: 3px 8px !important;
+    font-size: 13px !important;
+  }
+
+  .milestone-banner.beer::after {
+    bottom: -7px !important;
+    padding: 1px 7px !important;
+    font-size: 10px !important;
+  }
+}
+
+
+/* v12 — team-specific Easter eggs */
+
+/* Baby Centipedes crawl */
+.centipede-crawl {
+  position: fixed;
+  z-index: 2147483600;
+  left: -70px;
+  bottom: 14px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.centipede-crawl.active {
+  opacity: 1;
+  animation: centipedeTraverse 5s linear forwards;
+}
+
+.centipede-leader {
+  display: inline-block;
+  font-size: clamp(34px, 9vw, 58px);
+  filter: drop-shadow(2px 3px 0 rgba(0,0,0,.4));
+}
+
+.centipede-leader::after {
+  content: " 👶 🐛 👶 🪲 🐛 👶 🐛";
+  display: inline;
+}
+
+@keyframes centipedeTraverse {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(100vw + 180px)); }
+}
+
+/* Darf Box */
+.darf-box-egg {
+  position: fixed;
+  z-index: 2147483620;
+  inset: 0;
+  pointer-events: none;
+}
+
+.darf-box-object {
+  position: absolute;
+  left: 50%;
+  top: -120px;
+  font-size: clamp(66px, 18vw, 118px);
+  transform: translateX(-50%);
+}
+
+.darf-box-egg.active .darf-box-object {
+  animation: darfBoxDrop 1.25s cubic-bezier(.18,.75,.24,1) forwards;
+}
+
+.darf-box-caption {
+  position: absolute;
+  left: 50%;
+  top: 18%;
+  padding: 7px 12px;
+  border: 3px solid #f3ce5c;
+  color: #fff1b5;
+  background: #4b0508;
+  box-shadow: 4px 4px 0 #000;
+  font: 1000 clamp(18px, 5.5vw, 34px)/1 Impact, "Arial Black", sans-serif;
+  transform: translateX(-50%) rotate(-2deg);
+  opacity: 0;
+}
+
+.darf-box-egg.active .darf-box-caption {
+  animation: darfCaption 2.5s ease forwards;
+}
+
+@keyframes darfBoxDrop {
+  0% { top: -120px; transform: translateX(-50%) rotate(-10deg); }
+  72% { top: 45%; transform: translateX(-50%) rotate(8deg) scale(1.08); }
+  84% { top: 39%; transform: translateX(-50%) rotate(-4deg) scale(.96); }
+  100% { top: 42%; transform: translateX(-50%) rotate(0) scale(1); }
+}
+
+@keyframes darfCaption {
+  0%, 30% { opacity: 0; }
+  42%, 82% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Wet Bandits */
+.wet-bandit-drop {
+  position: fixed;
+  z-index: 2147483450;
+  top: -45px;
+  font-size: 30px;
+  pointer-events: none;
+  animation: wetDrop 1.5s ease-in var(--drop-delay) both;
+}
+
+@keyframes wetDrop {
+  0% { transform: translateY(-40px) scale(.7); opacity: 0; }
+  12% { opacity: 1; }
+  100% { transform: translateY(105vh) scale(1.05); opacity: .9; }
+}
+
+.wet-bandit-water {
+  position: fixed;
+  z-index: 2147483440;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--water-height, 4px);
+  pointer-events: none;
+  opacity: 0;
+  background:
+    repeating-radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.35) 0 3px, transparent 4px 12px),
+    linear-gradient(180deg, rgba(91,183,235,.65), rgba(28,91,150,.9));
+  transition: height 180ms ease, opacity 160ms ease;
+}
+
+.wet-bandit-water.active { opacity: .92; }
+.wet-bandit-water.draining {
+  height: 0 !important;
+  opacity: 0;
+  transition: height 1s ease-in, opacity 1s ease;
+}
+
+/* Slick Nicks disco */
+.slick-disco-layer {
+  position: fixed;
+  z-index: 2147483500;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.slick-disco-layer.active { opacity: 1; }
+.slick-disco-layer.leaving { opacity: 0; transition: opacity 420ms ease; }
+
+.slick-disco-ball {
+  position: absolute;
+  left: 50%;
+  top: -90px;
+  font-size: clamp(62px, 18vw, 120px);
+  transform: translateX(-50%);
+  animation: discoBallDrop .8s cubic-bezier(.18,.8,.2,1) forwards,
+             discoBallSpin 1.2s linear .8s infinite;
+}
+
+.slick-disco-rays {
+  position: absolute;
+  inset: -35%;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0 8deg,
+      rgba(255,255,255,.14) 8deg 14deg,
+      transparent 14deg 28deg,
+      rgba(255,220,120,.14) 28deg 34deg,
+      transparent 34deg 52deg
+    );
+  animation: discoRays 2.8s linear infinite;
+}
+
+body.slick-disco-mode .board-shell,
+body.slick-disco-mode .masthead {
+  animation: discoBoardPulse 420ms steps(2,end) infinite;
+}
+
+@keyframes discoBallDrop {
+  to { top: 18px; }
+}
+@keyframes discoBallSpin {
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+@keyframes discoRays {
+  to { transform: rotate(360deg); }
+}
+@keyframes discoBoardPulse {
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(80deg) brightness(1.25); }
+  100% { filter: hue-rotate(180deg) brightness(1); }
+}
+
+/* Sky Clouds */
+.sky-thunder-flash {
+  position: fixed;
+  z-index: 2147483700;
+  inset: 0;
+  background: rgba(255,255,255,.96);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.sky-thunder-flash.active {
+  animation: thunderFlash 130ms steps(2,end) forwards;
+}
+
+@keyframes thunderFlash {
+  0% { opacity: 0; }
+  30% { opacity: .95; }
+  55% { opacity: .12; }
+  80% { opacity: .72; }
+  100% { opacity: 0; }
+}
+
+/* Championship belt */
+.championship-belt-egg {
+  position: fixed;
+  z-index: 2147483690;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  padding: 18px;
+  pointer-events: none;
+  opacity: 0;
+  background: rgba(0,0,0,.72);
+}
+
+.championship-belt-egg.active {
+  animation: beltBackdropIn 220ms ease forwards;
+}
+
+.championship-belt-egg.leaving {
+  animation: beltBackdropOut 480ms ease forwards;
+}
+
+.championship-belt-image {
+  width: min(82vw, 500px);
+  max-height: 56vh;
+  object-fit: contain;
+  border: 5px ridge #d4a83c;
+  box-shadow:
+    0 0 0 4px #000,
+    0 0 36px rgba(255,205,70,.5);
+  transform: translateY(-120vh) rotate(-7deg) scale(.9);
+}
+
+.championship-belt-egg.active .championship-belt-image {
+  animation: beltBossDrop 900ms cubic-bezier(.15,.82,.2,1) 100ms forwards;
+}
+
+.championship-belt-title {
+  color: #ffe286;
+  font: 1000 clamp(20px,6vw,38px)/1 Impact, "Arial Black", sans-serif;
+  letter-spacing: .06em;
+  text-shadow: 3px 3px 0 #7b0c08, 6px 6px 0 #000;
+  opacity: 0;
+}
+
+.championship-belt-egg.active .championship-belt-title {
+  animation: beltTitleIn 500ms ease 650ms forwards;
+}
+
+@keyframes beltBackdropIn { to { opacity: 1; } }
+@keyframes beltBackdropOut { to { opacity: 0; } }
+@keyframes beltBossDrop {
+  0% { transform: translateY(-120vh) rotate(-7deg) scale(.9); }
+  72% { transform: translateY(22px) rotate(3deg) scale(1.05); }
+  88% { transform: translateY(-8px) rotate(-1deg) scale(.98); }
+  100% { transform: translateY(0) rotate(0) scale(1); }
+}
+@keyframes beltTitleIn {
+  to { opacity: 1; }
+}
+
+
+/* v12.2 — Team BEER gets its own sticky yellow flood */
+.team-beer-drop {
+  position: fixed;
+  z-index: 2147483455;
+  top: -50px;
+  font-size: 31px;
+  pointer-events: none;
+  filter: drop-shadow(2px 3px 0 rgba(0,0,0,.32));
+  animation: beerDropFall 1.5s ease-in var(--beer-drop-delay) both;
+}
+
+@keyframes beerDropFall {
+  0% { transform: translateY(-45px) rotate(-8deg) scale(.72); opacity: 0; }
+  12% { opacity: 1; }
+  100% { transform: translateY(105vh) rotate(16deg) scale(1.05); opacity: .95; }
+}
+
+.team-beer-puddle {
+  position: fixed;
+  z-index: 2147483445;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--beer-height, 4px);
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(255,255,255,.55) 0 3px, transparent 4px 12px),
+    radial-gradient(ellipse at 72% 0%, rgba(255,255,255,.4) 0 2px, transparent 3px 10px),
+    linear-gradient(180deg, rgba(255,224,92,.88), rgba(212,143,0,.96));
+  box-shadow:
+    0 -3px 0 rgba(255,244,177,.45),
+    0 -6px 16px rgba(255,190,0,.2);
+  transition: height 180ms ease, opacity 160ms ease;
+}
+
+.team-beer-puddle.active { opacity: .94; }
+
+.team-beer-puddle.draining {
+  height: 0 !important;
+  opacity: 0;
+  transition: height 1s ease-in, opacity 1s ease;
+}
+
+/* Darf Box: make the giant box pop off the screen */
+.darf-box-object {
+  filter:
+    drop-shadow(0 10px 0 rgba(0,0,0,.55))
+    drop-shadow(0 0 18px rgba(255,211,77,.42));
+}
+
+.darf-box-lid {
+  display: inline-block;
+  text-shadow:
+    0 0 10px rgba(255,226,113,.35),
+    4px 7px 0 rgba(0,0,0,.38);
+}
+
+/* Slick Nicks: disco ball drops to CENTER SCREEN and glows */
+.slick-disco-ball {
+  left: 50%;
+  top: -110px;
+  filter:
+    drop-shadow(0 12px 0 rgba(0,0,0,.5))
+    drop-shadow(0 0 22px rgba(255,255,255,.72))
+    drop-shadow(0 0 42px rgba(255,220,110,.34));
+  text-shadow:
+    0 0 18px rgba(255,255,255,.7),
+    0 0 34px rgba(255,210,100,.42);
+}
+
+@keyframes discoBallDrop {
+  0% {
+    top: -110px;
+    transform: translateX(-50%) rotate(-12deg) scale(.88);
+  }
+  72% {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(8deg) scale(1.09);
+  }
+  86% {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-4deg) scale(.97);
+  }
+  100% {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(0) scale(1);
+  }
+}
+
+@keyframes discoBallSpin {
+  from {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
