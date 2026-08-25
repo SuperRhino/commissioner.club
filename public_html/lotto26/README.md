@@ -386,3 +386,12 @@ git push
 ```
 
 The deployed lottery is intended to live at `commissioner.club/lotto26/`.
+
+
+## v12.5 — finale audio
+
+1. #1 reveal: **Touchdown Fanfare**
+2. When Touchdown ends: **First Down 2**
+3. Nothing else starts automatically.
+4. Press **Draft Order**
+5. After a short beat: **Bases Loaded 2**

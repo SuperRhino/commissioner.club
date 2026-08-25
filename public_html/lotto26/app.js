@@ -416,30 +416,31 @@ function switchToPickOneTransitionMusic() {
 function switchToTopPickRevealMusic() {
   if (topPickRevealMusicActivated) return;
   topPickRevealMusicActivated = true;
-  switchBackgroundTrack(TOP_PICK_REVEAL_MUSIC_URL, { volume: MUSIC_VOLUMES.topPickReveal });
+
+  // #1 reveal: Touchdown Fanfare, then First Down 2 automatically.
+  switchBackgroundTrack(TOP_PICK_REVEAL_MUSIC_URL, {
+    volume: MUSIC_VOLUMES.topPickReveal,
+    loop: false,
+    onEnded: () => {
+      if (!topPickRevealMusicActivated) return;
+      switchBackgroundTrack(DRAFT_ORDER_STING_URL, {
+        volume: MUSIC_VOLUMES.draftOrder,
+        loop: false
+      });
+    }
+  });
 }
 
 function playDraftOrderStingThenPostLottery() {
-  // This function is called ONLY by an explicit Draft Order press.
+  // Touchdown -> First Down has already happened after #1.
+  // Bases Loaded is still strictly gated behind pressing Draft Order.
   postLotteryMusicActivated = false;
-  draftOrderStingActive = true;
-  pendingPostLotteryMusic = true;
+  draftOrderStingActive = false;
+  pendingPostLotteryMusic = false;
 
-  switchBackgroundTrack(DRAFT_ORDER_STING_URL, {
-    volume: MUSIC_VOLUMES.draftOrder,
-    loop: false,
-    onEnded: () => {
-      draftOrderStingActive = false;
-      if (!pendingPostLotteryMusic) return;
-
-      pendingPostLotteryMusic = false;
-
-      // Let the First Down sting fully clear before the next track enters.
-      window.setTimeout(() => {
-        switchToPostLotteryMusic();
-      }, 1200);
-    }
-  });
+  window.setTimeout(() => {
+    switchToPostLotteryMusic();
+  }, 1200);
 }
 
 function switchToPostLotteryMusic() {
